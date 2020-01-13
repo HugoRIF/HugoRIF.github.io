@@ -1,0 +1,20 @@
+{
+    "name": "ClaroNetworks API",
+    "version": "0.0.1",
+    "description": "Definition of the API for the ClaroNetwoeks platform",
+    "title": "Claro Networks API",
+    "url" : "https://ClaroNetworks.com/v0.1/api",
+    
+    "order": [
+      "PostUser",
+      "Login",
+      "GetAll",
+      "GetEspecific",
+      "PutUser"
+      
+    ],
+    "template": {
+        "withCompare": true,
+        "withGenerator": true
+    }
+  }
