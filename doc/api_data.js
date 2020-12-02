@@ -28,18 +28,18 @@ define({ "api": [
     "name": ""
   },
   {
-    "type": "post",
-    "url": "/admin_user/login",
-    "title": "Inicio de sesion de administrador",
+    "type": "get",
+    "url": "/program/actual_programing/{country}&{day}",
+    "title": "Obtner la Programacion actual",
     "version": "1.0.0",
-    "name": "Iniciar_Sesion",
-    "group": "Notificaciones_Front",
+    "name": "Obtner_Progrmación_actual",
+    "group": "Programa",
     "permission": [
       {
         "name": "none"
       }
     ],
-    "description": "<p>Método POST para inciar sesión</p>",
+    "description": "<p>Método GET para obtener la progrmacion en tiempo real segun el pais  y dia que indiquen, este metodo sirve para pintar el carrusel de progrmacion, se obtiene la programacion de los 3 canales. Por lo tanto se obtiene el dia solicitado y el dia siguiente</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -152,22 +152,406 @@ define({ "api": [
         }
       ]
     },
-    "filename": "./Notificacions.js",
-    "groupTitle": "Notificaciones_Front"
+    "filename": "./Program.js",
+    "groupTitle": "Programa"
   },
   {
-    "type": "post",
-    "url": "/admin_user/login",
-    "title": "Inicio de sesion de administrador",
+    "type": "get",
+    "url": "/program/actual_programing_programation/{country}&{day}&{actual}",
+    "title": "Obtner la Programacion actual para el landing",
     "version": "1.0.0",
-    "name": "Iniciar_Sesion",
+    "name": "Obtner_Progrmación_actual_landing",
     "group": "Programa",
     "permission": [
       {
         "name": "none"
       }
     ],
-    "description": "<p>Método POST para inciar sesión</p>",
+    "description": "<p>Método GET para obtener la progrmacion en tiempo real segun el pais  y dia que indiquen,tambien se debe indicar si es el dia actual el cual se necesita ver. Este emtodo sirve para pintar los progrmas en el landing de progrmacion. Se regresa la lista de programas por cada canal hasta el fin del dia indicado</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Email del administrador</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña cifrada en sha1</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n\t\"email\":\"correo@gmail.com\",\n    \"password\":\"7c222fb2927d828af22f592134e8932480637c0d\"\n }",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del administrador</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nombre del administrador.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del administrador.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Genero del administrador</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Fecha de nacimiento.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "rol",
+            "description": "<p>Arreglo con la informacion del rol.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success User Found \",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Nombre\",\n        \"email\": \"correo@gmail.com\",\n        \"gender\": \"Male\",\n        \"birthday\": \"01-01-1970\",\n        \"rol\": {\n            \"id\": 1,\n            \"name\": \"root\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación del usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Program.js",
+    "groupTitle": "Programa"
+  },
+  {
+    "type": "get",
+    "url": "/program/getProgramingGrillFirst/{inicio}&{landing}&{id}",
+    "title": "Obtener toda la programacion para la grilla",
+    "version": "1.0.0",
+    "name": "Obtner_Progrmación_para_la_grilla",
+    "group": "Programa",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Método GET para obtener la lsita de programas para poder pintar la grilla, se obtiene a apartir del dia indicado hasta el ultimo dia con programacion. Solo se regresan os programas pertenecientes al canal indicado</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Email del administrador</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña cifrada en sha1</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n\t\"email\":\"correo@gmail.com\",\n    \"password\":\"7c222fb2927d828af22f592134e8932480637c0d\"\n }",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del administrador</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nombre del administrador.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del administrador.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Genero del administrador</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Fecha de nacimiento.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "rol",
+            "description": "<p>Arreglo con la informacion del rol.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success User Found \",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Nombre\",\n        \"email\": \"correo@gmail.com\",\n        \"gender\": \"Male\",\n        \"birthday\": \"01-01-1970\",\n        \"rol\": {\n            \"id\": 1,\n            \"name\": \"root\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación del usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Program.js",
+    "groupTitle": "Programa"
+  },
+  {
+    "type": "get",
+    "url": "/program/getSynopsis/{id}",
+    "title": "Obtner Sinopsis del programa",
+    "version": "1.0.0",
+    "name": "Obtner_Sinopsis",
+    "group": "Programa",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Método GET para obtener la sinopsis de un programa</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Email del administrador</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña cifrada en sha1</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n\t\"email\":\"correo@gmail.com\",\n    \"password\":\"7c222fb2927d828af22f592134e8932480637c0d\"\n }",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del administrador</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nombre del administrador.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del administrador.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Genero del administrador</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Fecha de nacimiento.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "rol",
+            "description": "<p>Arreglo con la informacion del rol.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success User Found \",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Nombre\",\n        \"email\": \"correo@gmail.com\",\n        \"gender\": \"Male\",\n        \"birthday\": \"01-01-1970\",\n        \"rol\": {\n            \"id\": 1,\n            \"name\": \"root\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación del usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Program.js",
+    "groupTitle": "Programa"
+  },
+  {
+    "type": "get",
+    "url": "/program/{id}",
+    "title": "Informacion de un programa especifico",
+    "version": "1.0.0",
+    "name": "Ver_Programa",
+    "group": "Programa",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Método GET para obtener la infromacion de un programa en especifico</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -852,6 +1236,474 @@ define({ "api": [
     "groupTitle": "User"
   },
   {
+    "type": "get",
+    "url": "/user/activeNotification",
+    "title": "Activar notificacion de un programa",
+    "version": "1.0.0",
+    "name": "Activar_notificacion_de_un_programa",
+    "group": "User",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Metodo para activar las notificaciones de un programa en especifico</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña cifra en sha1.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo:",
+        "content": "{\n\t\"email\":\"correo@gmail.com\",\n\t\"password\":\"25d55ad283aa400af464c76d713c07ad\"\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nombre del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Genero del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Compleañus del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "country",
+            "description": "<p>Informacion del pais del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "avatar",
+            "description": "<p>URL de la imagen del Avatar del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "config",
+            "description": "<p>Informacin de la configuración de notificaciones</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Favorites",
+            "description": "<p>Lista de favoritos del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Genres",
+            "description": "<p>Generos de los programas</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "respuesta exitosa :",
+          "content": "{\n \"code\":200,\n \"message\":\"Success User Found\"\n \"data\" : {\n    \"id\": 10,\n        \"name\": \"Becarios\",\n        \"email\": \"claronetworks.media@gmail.com\",\n        \"gender\": \"M\",\n        \"birthday\": \"1985-01-02\",\n        \"avatar\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg\",\n        \"country\": {\n            \"id\": 4,\n            \"name\": \"Chile\",\n            \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg\"\n        },\n        \"config\": {\n            \"beginning\": 0,\n            \"minutes\": 0,\n            \"email\": 0,\n            \"web\": 0\n        },\n        \"favorites\":[\n            {\n                \"id_section\": 1,\n                \"section\": \"Canal Claro\",\n                \"programs\": [\n                    {\n                        \"program_id\": 2,\n                        \"chapter_id\": 161,\n                        \"program_title\": \"Los Caballeros del Zodiaco (Saint Seiya)\",\n                        \"chapter_title\": \"SAGA DEL SANTUARIO\",\n                        \"time\": \"8:30\",\n                        \"rating\": \"PG\",\n                        \"active\": 1,\n                        \"sinopsis\": \"Los guerreros llamados \\\"Santos\\\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.\",\n                        \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg\",\n                        \"channel\": \"Canal Claro\"\n                    }\n                ]\n            }\n        ],\n        \"genres\":[\n             {\n                \"id\": 1,\n                \"title\": \"Kids\"\n            },\n        ]\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>User not found with the given information.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Some params can´t be found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":400,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Platform_Users.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/user/add_favorites/",
+    "title": "Agregar a favoritos",
+    "version": "1.0.0",
+    "name": "Agregar_a_favoritos",
+    "group": "User",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Metodo que le permite a un usuario agregar un programa a favortios</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña cifra en sha1.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo:",
+        "content": "{\n\t\"email\":\"correo@gmail.com\",\n\t\"password\":\"25d55ad283aa400af464c76d713c07ad\"\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nombre del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Genero del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Compleañus del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "country",
+            "description": "<p>Informacion del pais del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "avatar",
+            "description": "<p>URL de la imagen del Avatar del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "config",
+            "description": "<p>Informacin de la configuración de notificaciones</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Favorites",
+            "description": "<p>Lista de favoritos del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Genres",
+            "description": "<p>Generos de los programas</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "respuesta exitosa :",
+          "content": "{\n \"code\":200,\n \"message\":\"Success User Found\"\n \"data\" : {\n    \"id\": 10,\n        \"name\": \"Becarios\",\n        \"email\": \"claronetworks.media@gmail.com\",\n        \"gender\": \"M\",\n        \"birthday\": \"1985-01-02\",\n        \"avatar\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg\",\n        \"country\": {\n            \"id\": 4,\n            \"name\": \"Chile\",\n            \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg\"\n        },\n        \"config\": {\n            \"beginning\": 0,\n            \"minutes\": 0,\n            \"email\": 0,\n            \"web\": 0\n        },\n        \"favorites\":[\n            {\n                \"id_section\": 1,\n                \"section\": \"Canal Claro\",\n                \"programs\": [\n                    {\n                        \"program_id\": 2,\n                        \"chapter_id\": 161,\n                        \"program_title\": \"Los Caballeros del Zodiaco (Saint Seiya)\",\n                        \"chapter_title\": \"SAGA DEL SANTUARIO\",\n                        \"time\": \"8:30\",\n                        \"rating\": \"PG\",\n                        \"active\": 1,\n                        \"sinopsis\": \"Los guerreros llamados \\\"Santos\\\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.\",\n                        \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg\",\n                        \"channel\": \"Canal Claro\"\n                    }\n                ]\n            }\n        ],\n        \"genres\":[\n             {\n                \"id\": 1,\n                \"title\": \"Kids\"\n            },\n        ]\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>User not found with the given information.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Some params can´t be found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":400,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Platform_Users.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/user/config_notification/",
+    "title": "Configurar notificaciones",
+    "version": "1.0.0",
+    "name": "Configurar_notificaciones",
+    "group": "User",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Configuracion para las notificaciones tanto web como notificiaciones por correo, el tiempo en el que llegará y cuales llegarán</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña cifra en sha1.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo:",
+        "content": "{\n\t\"email\":\"correo@gmail.com\",\n\t\"password\":\"25d55ad283aa400af464c76d713c07ad\"\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nombre del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Genero del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Compleañus del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "country",
+            "description": "<p>Informacion del pais del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "avatar",
+            "description": "<p>URL de la imagen del Avatar del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "config",
+            "description": "<p>Informacin de la configuración de notificaciones</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Favorites",
+            "description": "<p>Lista de favoritos del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Genres",
+            "description": "<p>Generos de los programas</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "respuesta exitosa :",
+          "content": "{\n \"code\":200,\n \"message\":\"Success User Found\"\n \"data\" : {\n    \"id\": 10,\n        \"name\": \"Becarios\",\n        \"email\": \"claronetworks.media@gmail.com\",\n        \"gender\": \"M\",\n        \"birthday\": \"1985-01-02\",\n        \"avatar\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg\",\n        \"country\": {\n            \"id\": 4,\n            \"name\": \"Chile\",\n            \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg\"\n        },\n        \"config\": {\n            \"beginning\": 0,\n            \"minutes\": 0,\n            \"email\": 0,\n            \"web\": 0\n        },\n        \"favorites\":[\n            {\n                \"id_section\": 1,\n                \"section\": \"Canal Claro\",\n                \"programs\": [\n                    {\n                        \"program_id\": 2,\n                        \"chapter_id\": 161,\n                        \"program_title\": \"Los Caballeros del Zodiaco (Saint Seiya)\",\n                        \"chapter_title\": \"SAGA DEL SANTUARIO\",\n                        \"time\": \"8:30\",\n                        \"rating\": \"PG\",\n                        \"active\": 1,\n                        \"sinopsis\": \"Los guerreros llamados \\\"Santos\\\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.\",\n                        \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg\",\n                        \"channel\": \"Canal Claro\"\n                    }\n                ]\n            }\n        ],\n        \"genres\":[\n             {\n                \"id\": 1,\n                \"title\": \"Kids\"\n            },\n        ]\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>User not found with the given information.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Some params can´t be found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":400,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Platform_Users.js",
+    "groupTitle": "User"
+  },
+  {
     "type": "delete",
     "url": "/user/{id_user}",
     "title": "Eliminar un usuario de front.",
@@ -926,6 +1778,162 @@ define({ "api": [
         {
           "title": "Response (BadRequest):",
           "content": "{\n \"code\":400,\n \"message\":\"The parman <param> have a bad format or is invalid\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Platform_Users.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/user/deactiveNotification",
+    "title": "Desactivar notificacion de un programa",
+    "version": "1.0.0",
+    "name": "Desactivar_notificacion_de_un_programa",
+    "group": "User",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Metodo para desactivar las notificaciones de un programa en especifico</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña cifra en sha1.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo:",
+        "content": "{\n\t\"email\":\"correo@gmail.com\",\n\t\"password\":\"25d55ad283aa400af464c76d713c07ad\"\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nombre del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Genero del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Compleañus del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "country",
+            "description": "<p>Informacion del pais del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "avatar",
+            "description": "<p>URL de la imagen del Avatar del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "config",
+            "description": "<p>Informacin de la configuración de notificaciones</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Favorites",
+            "description": "<p>Lista de favoritos del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Genres",
+            "description": "<p>Generos de los programas</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "respuesta exitosa :",
+          "content": "{\n \"code\":200,\n \"message\":\"Success User Found\"\n \"data\" : {\n    \"id\": 10,\n        \"name\": \"Becarios\",\n        \"email\": \"claronetworks.media@gmail.com\",\n        \"gender\": \"M\",\n        \"birthday\": \"1985-01-02\",\n        \"avatar\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg\",\n        \"country\": {\n            \"id\": 4,\n            \"name\": \"Chile\",\n            \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg\"\n        },\n        \"config\": {\n            \"beginning\": 0,\n            \"minutes\": 0,\n            \"email\": 0,\n            \"web\": 0\n        },\n        \"favorites\":[\n            {\n                \"id_section\": 1,\n                \"section\": \"Canal Claro\",\n                \"programs\": [\n                    {\n                        \"program_id\": 2,\n                        \"chapter_id\": 161,\n                        \"program_title\": \"Los Caballeros del Zodiaco (Saint Seiya)\",\n                        \"chapter_title\": \"SAGA DEL SANTUARIO\",\n                        \"time\": \"8:30\",\n                        \"rating\": \"PG\",\n                        \"active\": 1,\n                        \"sinopsis\": \"Los guerreros llamados \\\"Santos\\\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.\",\n                        \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg\",\n                        \"channel\": \"Canal Claro\"\n                    }\n                ]\n            }\n        ],\n        \"genres\":[\n             {\n                \"id\": 1,\n                \"title\": \"Kids\"\n            },\n        ]\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>User not found with the given information.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Some params can´t be found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":400,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
           "type": "json"
         }
       ]
@@ -1697,6 +2705,162 @@ define({ "api": [
     "groupTitle": "User"
   },
   {
+    "type": "get",
+    "url": "/user/favoritesList/{id}&{type}",
+    "title": "Mostrar lista de favoritos",
+    "version": "1.0.0",
+    "name": "Mostrar_favoritos",
+    "group": "User",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Metodo para ver la lista completa de los programas favoritos del usuario asi como su informacion necesaria para mostralos en el landing</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña cifra en sha1.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo:",
+        "content": "{\n\t\"email\":\"correo@gmail.com\",\n\t\"password\":\"25d55ad283aa400af464c76d713c07ad\"\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nombre del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Genero del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Compleañus del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "country",
+            "description": "<p>Informacion del pais del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "avatar",
+            "description": "<p>URL de la imagen del Avatar del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "config",
+            "description": "<p>Informacin de la configuración de notificaciones</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Favorites",
+            "description": "<p>Lista de favoritos del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Genres",
+            "description": "<p>Generos de los programas</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "respuesta exitosa :",
+          "content": "{\n \"code\":200,\n \"message\":\"Success User Found\"\n \"data\" : {\n    \"id\": 10,\n        \"name\": \"Becarios\",\n        \"email\": \"claronetworks.media@gmail.com\",\n        \"gender\": \"M\",\n        \"birthday\": \"1985-01-02\",\n        \"avatar\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg\",\n        \"country\": {\n            \"id\": 4,\n            \"name\": \"Chile\",\n            \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg\"\n        },\n        \"config\": {\n            \"beginning\": 0,\n            \"minutes\": 0,\n            \"email\": 0,\n            \"web\": 0\n        },\n        \"favorites\":[\n            {\n                \"id_section\": 1,\n                \"section\": \"Canal Claro\",\n                \"programs\": [\n                    {\n                        \"program_id\": 2,\n                        \"chapter_id\": 161,\n                        \"program_title\": \"Los Caballeros del Zodiaco (Saint Seiya)\",\n                        \"chapter_title\": \"SAGA DEL SANTUARIO\",\n                        \"time\": \"8:30\",\n                        \"rating\": \"PG\",\n                        \"active\": 1,\n                        \"sinopsis\": \"Los guerreros llamados \\\"Santos\\\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.\",\n                        \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg\",\n                        \"channel\": \"Canal Claro\"\n                    }\n                ]\n            }\n        ],\n        \"genres\":[\n             {\n                \"id\": 1,\n                \"title\": \"Kids\"\n            },\n        ]\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>User not found with the given information.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Some params can´t be found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":400,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Platform_Users.js",
+    "groupTitle": "User"
+  },
+  {
     "type": "post",
     "url": "/user",
     "title": "Crear un usuario Nuevo",
@@ -1916,6 +3080,162 @@ define({ "api": [
         {
           "title": "Response (Forbiden):",
           "content": "{\n \"code\":403,\n \"message\":\"Invalid API key or the User is unathorized for this method\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Platform_Users.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/user/remove_favorites/",
+    "title": "Quitar de favoritos",
+    "version": "1.0.0",
+    "name": "Quitar_de_favoritos",
+    "group": "User",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Metodo para quitar un programa de la lista de favoritos</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña cifra en sha1.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo:",
+        "content": "{\n\t\"email\":\"correo@gmail.com\",\n\t\"password\":\"25d55ad283aa400af464c76d713c07ad\"\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nombre del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>Correo del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Genero del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Compleañus del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "country",
+            "description": "<p>Informacion del pais del usuario.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "avatar",
+            "description": "<p>URL de la imagen del Avatar del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "config",
+            "description": "<p>Informacin de la configuración de notificaciones</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Favorites",
+            "description": "<p>Lista de favoritos del usuario</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Genres",
+            "description": "<p>Generos de los programas</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "respuesta exitosa :",
+          "content": "{\n \"code\":200,\n \"message\":\"Success User Found\"\n \"data\" : {\n    \"id\": 10,\n        \"name\": \"Becarios\",\n        \"email\": \"claronetworks.media@gmail.com\",\n        \"gender\": \"M\",\n        \"birthday\": \"1985-01-02\",\n        \"avatar\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg\",\n        \"country\": {\n            \"id\": 4,\n            \"name\": \"Chile\",\n            \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg\"\n        },\n        \"config\": {\n            \"beginning\": 0,\n            \"minutes\": 0,\n            \"email\": 0,\n            \"web\": 0\n        },\n        \"favorites\":[\n            {\n                \"id_section\": 1,\n                \"section\": \"Canal Claro\",\n                \"programs\": [\n                    {\n                        \"program_id\": 2,\n                        \"chapter_id\": 161,\n                        \"program_title\": \"Los Caballeros del Zodiaco (Saint Seiya)\",\n                        \"chapter_title\": \"SAGA DEL SANTUARIO\",\n                        \"time\": \"8:30\",\n                        \"rating\": \"PG\",\n                        \"active\": 1,\n                        \"sinopsis\": \"Los guerreros llamados \\\"Santos\\\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.\",\n                        \"image\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg\",\n                        \"channel\": \"Canal Claro\"\n                    }\n                ]\n            }\n        ],\n        \"genres\":[\n             {\n                \"id\": 1,\n                \"title\": \"Kids\"\n            },\n        ]\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>User not found with the given information.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Some params can´t be found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":400,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
           "type": "json"
         }
       ]

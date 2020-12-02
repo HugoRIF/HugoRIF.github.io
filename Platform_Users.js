@@ -947,3 +947,591 @@
  *  }
  * }
 */
+/**
+ * @api {post} /user/config_notification/ Configurar notificaciones 
+ * @apiVersion 1.0.0
+ * @apiName Configurar notificaciones 
+ * @apiGroup User
+ * @apiPermission none
+ *
+ * @apiDescription Configuracion para las notificaciones tanto web como notificiaciones por correo, el tiempo en el que llegará y cuales llegarán
+ *
+ * @apiParam {String} mail     Correo del usuario.
+ * @apiParam {String} password Contraseña cifra en sha1.
+ *
+ * @apiExample Ejemplo:
+ * {
+	"email":"correo@gmail.com",
+	"password":"25d55ad283aa400af464c76d713c07ad"
+ *}
+ * @apiSuccess {Integer}   id            Id del usuario.
+ * @apiSuccess {String}    name          Nombre del usuario.
+ * @apiSuccess {String}    mail          Correo del usuario
+ * @apiSuccess {String}    gender       Genero del usuario
+ * @apiSuccess {Date}      birthday     Compleañus del usuario.
+ * @apiSuccess {Array}   country       Informacion del pais del usuario.
+ * @apiSuccess {String}    avatar       URL de la imagen del Avatar del usuario
+ * @apiSuccess {Array}    config       Informacin de la configuración de notificaciones
+ * @apiSuccess {Array}    Favorites     Lista de favoritos del usuario
+ * @apiSuccess {Array}    Genres    Generos de los programas
+ *
+ * @apiSuccessExample {json} respuesta exitosa :
+ * {
+ *  "code":200,
+ *  "message":"Success User Found"
+ *  "data" : {
+ *     "id": 10,
+        "name": "Becarios",
+        "email": "claronetworks.media@gmail.com",
+        "gender": "M",
+        "birthday": "1985-01-02",
+        "avatar": "http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg",
+        "country": {
+            "id": 4,
+            "name": "Chile",
+            "image": "http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg"
+        },
+        "config": {
+            "beginning": 0,
+            "minutes": 0,
+            "email": 0,
+            "web": 0
+        },
+        "favorites":[
+            {
+                "id_section": 1,
+                "section": "Canal Claro",
+                "programs": [
+                    {
+                        "program_id": 2,
+                        "chapter_id": 161,
+                        "program_title": "Los Caballeros del Zodiaco (Saint Seiya)",
+                        "chapter_title": "SAGA DEL SANTUARIO",
+                        "time": "8:30",
+                        "rating": "PG",
+                        "active": 1,
+                        "sinopsis": "Los guerreros llamados \"Santos\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.",
+                        "image": "http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg",
+                        "channel": "Canal Claro"
+                    }
+                ]
+            }
+        ],
+        "genres":[
+             {
+                "id": 1,
+                "title": "Kids"
+            },
+        ]
+ *  }
+ * }
+ * @apiError NotFound   User not found with the given information.
+ * @apiError BadRequest  Some params can´t be found.
+ *
+ * @apiErrorExample Response (NotFound):
+ * {
+ *  "code":404,
+ *  "message":"Error User not found with the given information. "
+ *  "data" : {
+ *     
+ *  }
+ * }
+ *  * @apiErrorExample Response (BadRequest):
+ * {
+ *  "code":400,
+ *  "message":"Some params can´t be found"
+ *  "data" : {
+ *     
+ *  }
+ * }
+*/
+/**
+ * @api {post} /user/add_favorites/ Agregar a favoritos 
+ * @apiVersion 1.0.0
+ * @apiName Agregar a favoritos
+ * @apiGroup User
+ * @apiPermission none
+ *
+ * @apiDescription Metodo que le permite a un usuario agregar un programa a favortios
+ *
+ * @apiParam {String} mail     Correo del usuario.
+ * @apiParam {String} password Contraseña cifra en sha1.
+ *
+ * @apiExample Ejemplo:
+ * {
+	"email":"correo@gmail.com",
+	"password":"25d55ad283aa400af464c76d713c07ad"
+ *}
+ * @apiSuccess {Integer}   id            Id del usuario.
+ * @apiSuccess {String}    name          Nombre del usuario.
+ * @apiSuccess {String}    mail          Correo del usuario
+ * @apiSuccess {String}    gender       Genero del usuario
+ * @apiSuccess {Date}      birthday     Compleañus del usuario.
+ * @apiSuccess {Array}   country       Informacion del pais del usuario.
+ * @apiSuccess {String}    avatar       URL de la imagen del Avatar del usuario
+ * @apiSuccess {Array}    config       Informacin de la configuración de notificaciones
+ * @apiSuccess {Array}    Favorites     Lista de favoritos del usuario
+ * @apiSuccess {Array}    Genres    Generos de los programas
+ *
+ * @apiSuccessExample {json} respuesta exitosa :
+ * {
+ *  "code":200,
+ *  "message":"Success User Found"
+ *  "data" : {
+ *     "id": 10,
+        "name": "Becarios",
+        "email": "claronetworks.media@gmail.com",
+        "gender": "M",
+        "birthday": "1985-01-02",
+        "avatar": "http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg",
+        "country": {
+            "id": 4,
+            "name": "Chile",
+            "image": "http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg"
+        },
+        "config": {
+            "beginning": 0,
+            "minutes": 0,
+            "email": 0,
+            "web": 0
+        },
+        "favorites":[
+            {
+                "id_section": 1,
+                "section": "Canal Claro",
+                "programs": [
+                    {
+                        "program_id": 2,
+                        "chapter_id": 161,
+                        "program_title": "Los Caballeros del Zodiaco (Saint Seiya)",
+                        "chapter_title": "SAGA DEL SANTUARIO",
+                        "time": "8:30",
+                        "rating": "PG",
+                        "active": 1,
+                        "sinopsis": "Los guerreros llamados \"Santos\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.",
+                        "image": "http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg",
+                        "channel": "Canal Claro"
+                    }
+                ]
+            }
+        ],
+        "genres":[
+             {
+                "id": 1,
+                "title": "Kids"
+            },
+        ]
+ *  }
+ * }
+ * @apiError NotFound   User not found with the given information.
+ * @apiError BadRequest  Some params can´t be found.
+ *
+ * @apiErrorExample Response (NotFound):
+ * {
+ *  "code":404,
+ *  "message":"Error User not found with the given information. "
+ *  "data" : {
+ *     
+ *  }
+ * }
+ *  * @apiErrorExample Response (BadRequest):
+ * {
+ *  "code":400,
+ *  "message":"Some params can´t be found"
+ *  "data" : {
+ *     
+ *  }
+ * }
+*/
+/**
+ * @api {post} /user/remove_favorites/ Quitar de favoritos
+ * @apiVersion 1.0.0
+ * @apiName Quitar de favoritos
+ * @apiGroup User
+ * @apiPermission none
+ *
+ * @apiDescription Metodo para quitar un programa de la lista de favoritos
+ *
+ * @apiParam {String} mail     Correo del usuario.
+ * @apiParam {String} password Contraseña cifra en sha1.
+ *
+ * @apiExample Ejemplo:
+ * {
+	"email":"correo@gmail.com",
+	"password":"25d55ad283aa400af464c76d713c07ad"
+ *}
+ * @apiSuccess {Integer}   id            Id del usuario.
+ * @apiSuccess {String}    name          Nombre del usuario.
+ * @apiSuccess {String}    mail          Correo del usuario
+ * @apiSuccess {String}    gender       Genero del usuario
+ * @apiSuccess {Date}      birthday     Compleañus del usuario.
+ * @apiSuccess {Array}   country       Informacion del pais del usuario.
+ * @apiSuccess {String}    avatar       URL de la imagen del Avatar del usuario
+ * @apiSuccess {Array}    config       Informacin de la configuración de notificaciones
+ * @apiSuccess {Array}    Favorites     Lista de favoritos del usuario
+ * @apiSuccess {Array}    Genres    Generos de los programas
+ *
+ * @apiSuccessExample {json} respuesta exitosa :
+ * {
+ *  "code":200,
+ *  "message":"Success User Found"
+ *  "data" : {
+ *     "id": 10,
+        "name": "Becarios",
+        "email": "claronetworks.media@gmail.com",
+        "gender": "M",
+        "birthday": "1985-01-02",
+        "avatar": "http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg",
+        "country": {
+            "id": 4,
+            "name": "Chile",
+            "image": "http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg"
+        },
+        "config": {
+            "beginning": 0,
+            "minutes": 0,
+            "email": 0,
+            "web": 0
+        },
+        "favorites":[
+            {
+                "id_section": 1,
+                "section": "Canal Claro",
+                "programs": [
+                    {
+                        "program_id": 2,
+                        "chapter_id": 161,
+                        "program_title": "Los Caballeros del Zodiaco (Saint Seiya)",
+                        "chapter_title": "SAGA DEL SANTUARIO",
+                        "time": "8:30",
+                        "rating": "PG",
+                        "active": 1,
+                        "sinopsis": "Los guerreros llamados \"Santos\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.",
+                        "image": "http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg",
+                        "channel": "Canal Claro"
+                    }
+                ]
+            }
+        ],
+        "genres":[
+             {
+                "id": 1,
+                "title": "Kids"
+            },
+        ]
+ *  }
+ * }
+ * @apiError NotFound   User not found with the given information.
+ * @apiError BadRequest  Some params can´t be found.
+ *
+ * @apiErrorExample Response (NotFound):
+ * {
+ *  "code":404,
+ *  "message":"Error User not found with the given information. "
+ *  "data" : {
+ *     
+ *  }
+ * }
+ *  * @apiErrorExample Response (BadRequest):
+ * {
+ *  "code":400,
+ *  "message":"Some params can´t be found"
+ *  "data" : {
+ *     
+ *  }
+ * }
+*/
+/**
+ * @api {get} /user/favoritesList/{id}&{type} Mostrar lista de favoritos
+ * @apiVersion 1.0.0
+ * @apiName Mostrar favoritos
+ * @apiGroup User
+ * @apiPermission none
+ *
+ * @apiDescription Metodo para ver la lista completa de los programas favoritos del usuario asi como su informacion necesaria para mostralos en el landing
+ *
+ * @apiParam {String} mail     Correo del usuario.
+ * @apiParam {String} password Contraseña cifra en sha1.
+ *
+ * @apiExample Ejemplo:
+ * {
+	"email":"correo@gmail.com",
+	"password":"25d55ad283aa400af464c76d713c07ad"
+ *}
+ * @apiSuccess {Integer}   id            Id del usuario.
+ * @apiSuccess {String}    name          Nombre del usuario.
+ * @apiSuccess {String}    mail          Correo del usuario
+ * @apiSuccess {String}    gender       Genero del usuario
+ * @apiSuccess {Date}      birthday     Compleañus del usuario.
+ * @apiSuccess {Array}   country       Informacion del pais del usuario.
+ * @apiSuccess {String}    avatar       URL de la imagen del Avatar del usuario
+ * @apiSuccess {Array}    config       Informacin de la configuración de notificaciones
+ * @apiSuccess {Array}    Favorites     Lista de favoritos del usuario
+ * @apiSuccess {Array}    Genres    Generos de los programas
+ *
+ * @apiSuccessExample {json} respuesta exitosa :
+ * {
+ *  "code":200,
+ *  "message":"Success User Found"
+ *  "data" : {
+ *     "id": 10,
+        "name": "Becarios",
+        "email": "claronetworks.media@gmail.com",
+        "gender": "M",
+        "birthday": "1985-01-02",
+        "avatar": "http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg",
+        "country": {
+            "id": 4,
+            "name": "Chile",
+            "image": "http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg"
+        },
+        "config": {
+            "beginning": 0,
+            "minutes": 0,
+            "email": 0,
+            "web": 0
+        },
+        "favorites":[
+            {
+                "id_section": 1,
+                "section": "Canal Claro",
+                "programs": [
+                    {
+                        "program_id": 2,
+                        "chapter_id": 161,
+                        "program_title": "Los Caballeros del Zodiaco (Saint Seiya)",
+                        "chapter_title": "SAGA DEL SANTUARIO",
+                        "time": "8:30",
+                        "rating": "PG",
+                        "active": 1,
+                        "sinopsis": "Los guerreros llamados \"Santos\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.",
+                        "image": "http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg",
+                        "channel": "Canal Claro"
+                    }
+                ]
+            }
+        ],
+        "genres":[
+             {
+                "id": 1,
+                "title": "Kids"
+            },
+        ]
+ *  }
+ * }
+ * @apiError NotFound   User not found with the given information.
+ * @apiError BadRequest  Some params can´t be found.
+ *
+ * @apiErrorExample Response (NotFound):
+ * {
+ *  "code":404,
+ *  "message":"Error User not found with the given information. "
+ *  "data" : {
+ *     
+ *  }
+ * }
+ *  * @apiErrorExample Response (BadRequest):
+ * {
+ *  "code":400,
+ *  "message":"Some params can´t be found"
+ *  "data" : {
+ *     
+ *  }
+ * }
+*/
+/**
+ * @api {get} /user/activeNotification Activar notificacion de un programa
+ * @apiVersion 1.0.0
+ * @apiName Activar notificacion de un programa
+ * @apiGroup User
+ * @apiPermission none
+ *
+ * @apiDescription Metodo para activar las notificaciones de un programa en especifico 
+ *
+ * @apiParam {String} mail     Correo del usuario.
+ * @apiParam {String} password Contraseña cifra en sha1.
+ *
+ * @apiExample Ejemplo:
+ * {
+	"email":"correo@gmail.com",
+	"password":"25d55ad283aa400af464c76d713c07ad"
+ *}
+ * @apiSuccess {Integer}   id            Id del usuario.
+ * @apiSuccess {String}    name          Nombre del usuario.
+ * @apiSuccess {String}    mail          Correo del usuario
+ * @apiSuccess {String}    gender       Genero del usuario
+ * @apiSuccess {Date}      birthday     Compleañus del usuario.
+ * @apiSuccess {Array}   country       Informacion del pais del usuario.
+ * @apiSuccess {String}    avatar       URL de la imagen del Avatar del usuario
+ * @apiSuccess {Array}    config       Informacin de la configuración de notificaciones
+ * @apiSuccess {Array}    Favorites     Lista de favoritos del usuario
+ * @apiSuccess {Array}    Genres    Generos de los programas
+ *
+ * @apiSuccessExample {json} respuesta exitosa :
+ * {
+ *  "code":200,
+ *  "message":"Success User Found"
+ *  "data" : {
+ *     "id": 10,
+        "name": "Becarios",
+        "email": "claronetworks.media@gmail.com",
+        "gender": "M",
+        "birthday": "1985-01-02",
+        "avatar": "http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg",
+        "country": {
+            "id": 4,
+            "name": "Chile",
+            "image": "http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg"
+        },
+        "config": {
+            "beginning": 0,
+            "minutes": 0,
+            "email": 0,
+            "web": 0
+        },
+        "favorites":[
+            {
+                "id_section": 1,
+                "section": "Canal Claro",
+                "programs": [
+                    {
+                        "program_id": 2,
+                        "chapter_id": 161,
+                        "program_title": "Los Caballeros del Zodiaco (Saint Seiya)",
+                        "chapter_title": "SAGA DEL SANTUARIO",
+                        "time": "8:30",
+                        "rating": "PG",
+                        "active": 1,
+                        "sinopsis": "Los guerreros llamados \"Santos\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.",
+                        "image": "http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg",
+                        "channel": "Canal Claro"
+                    }
+                ]
+            }
+        ],
+        "genres":[
+             {
+                "id": 1,
+                "title": "Kids"
+            },
+        ]
+ *  }
+ * }
+ * @apiError NotFound   User not found with the given information.
+ * @apiError BadRequest  Some params can´t be found.
+ *
+ * @apiErrorExample Response (NotFound):
+ * {
+ *  "code":404,
+ *  "message":"Error User not found with the given information. "
+ *  "data" : {
+ *     
+ *  }
+ * }
+ *  * @apiErrorExample Response (BadRequest):
+ * {
+ *  "code":400,
+ *  "message":"Some params can´t be found"
+ *  "data" : {
+ *     
+ *  }
+ * }
+*/
+/**
+ * @api {post} /user/deactiveNotification Desactivar notificacion de un programa
+ * @apiVersion 1.0.0
+ * @apiName Desactivar notificacion de un programa
+ * @apiGroup User
+ * @apiPermission none
+ *
+ * @apiDescription Metodo para desactivar las notificaciones de un programa en especifico 
+ *
+ * @apiParam {String} mail     Correo del usuario.
+ * @apiParam {String} password Contraseña cifra en sha1.
+ *
+ * @apiExample Ejemplo:
+ * {
+	"email":"correo@gmail.com",
+	"password":"25d55ad283aa400af464c76d713c07ad"
+ *}
+ * @apiSuccess {Integer}   id            Id del usuario.
+ * @apiSuccess {String}    name          Nombre del usuario.
+ * @apiSuccess {String}    mail          Correo del usuario
+ * @apiSuccess {String}    gender       Genero del usuario
+ * @apiSuccess {Date}      birthday     Compleañus del usuario.
+ * @apiSuccess {Array}   country       Informacion del pais del usuario.
+ * @apiSuccess {String}    avatar       URL de la imagen del Avatar del usuario
+ * @apiSuccess {Array}    config       Informacin de la configuración de notificaciones
+ * @apiSuccess {Array}    Favorites     Lista de favoritos del usuario
+ * @apiSuccess {Array}    Genres    Generos de los programas
+ *
+ * @apiSuccessExample {json} respuesta exitosa :
+ * {
+ *  "code":200,
+ *  "message":"Success User Found"
+ *  "data" : {
+ *     "id": 10,
+        "name": "Becarios",
+        "email": "claronetworks.media@gmail.com",
+        "gender": "M",
+        "birthday": "1985-01-02",
+        "avatar": "http://www.claronetworks.openofficedospuntocero.info/images/home/user-login.svg",
+        "country": {
+            "id": 4,
+            "name": "Chile",
+            "image": "http://www.claronetworks.openofficedospuntocero.info/images/paises/chile.svg"
+        },
+        "config": {
+            "beginning": 0,
+            "minutes": 0,
+            "email": 0,
+            "web": 0
+        },
+        "favorites":[
+            {
+                "id_section": 1,
+                "section": "Canal Claro",
+                "programs": [
+                    {
+                        "program_id": 2,
+                        "chapter_id": 161,
+                        "program_title": "Los Caballeros del Zodiaco (Saint Seiya)",
+                        "chapter_title": "SAGA DEL SANTUARIO",
+                        "time": "8:30",
+                        "rating": "PG",
+                        "active": 1,
+                        "sinopsis": "Los guerreros llamados \"Santos\" son campeones de la esperanza que aparecen cuando el mal amenaza al mundo.",
+                        "image": "http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg",
+                        "channel": "Canal Claro"
+                    }
+                ]
+            }
+        ],
+        "genres":[
+             {
+                "id": 1,
+                "title": "Kids"
+            },
+        ]
+ *  }
+ * }
+ * @apiError NotFound   User not found with the given information.
+ * @apiError BadRequest  Some params can´t be found.
+ *
+ * @apiErrorExample Response (NotFound):
+ * {
+ *  "code":404,
+ *  "message":"Error User not found with the given information. "
+ *  "data" : {
+ *     
+ *  }
+ * }
+ *  * @apiErrorExample Response (BadRequest):
+ * {
+ *  "code":400,
+ *  "message":"Some params can´t be found"
+ *  "data" : {
+ *     
+ *  }
+ * }
+*/

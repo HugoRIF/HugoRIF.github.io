@@ -4,9 +4,9 @@
     "description": "Definicion de la API de Claro Networks",
     "title": "Claro Networks API",
     "url" : "http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public",
-    
+  
     "template": {
-        "withCompare": false,
+        "withCompare": true,
         "withGenerator": true
     }
   }
