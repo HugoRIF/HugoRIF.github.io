@@ -1,20 +1,12 @@
 {
     "name": "ClaroNetworks API",
-    "version": "0.0.1",
-    "description": "Definition of the API for the ClaroNetwoeks platform",
+    "version": "1.0.0",
+    "description": "Definicion de la API de Claro Networks",
     "title": "Claro Networks API",
-    "url" : "https://ClaroNetworks.com/v0.1/api",
+    "url" : "http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public",
     
-    "order": [
-      "PostUser",
-      "Login",
-      "GetAll",
-      "GetEspecific",
-      "PutUser"
-      
-    ],
     "template": {
-        "withCompare": true,
+        "withCompare": false,
         "withGenerator": true
     }
   }

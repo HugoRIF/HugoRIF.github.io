@@ -1,18 +1,11 @@
 {
   "name": "ClaroNetworks API",
-  "version": "0.0.1",
-  "description": "Definition of the API for the ClaroNetwoeks platform",
+  "version": "1.0.0",
+  "description": "Definicion de la API de Claro Networks",
   "title": "Claro Networks API",
-  "url": "https://ClaroNetworks.com/v0.1/api",
-  "order": [
-    "PostUser",
-    "Login",
-    "GetAll",
-    "GetEspecific",
-    "PutUser"
-  ],
+  "url": "http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public",
   "template": {
-    "withCompare": true,
+    "withCompare": false,
     "withGenerator": true
   },
   "sampleUrl": false,
@@ -20,8 +13,8 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2020-01-13T07:23:59.342Z",
-    "url": "http://apidocjs.com",
-    "version": "0.19.1"
+    "time": "2020-12-02T20:21:50.214Z",
+    "url": "https://apidocjs.com",
+    "version": "0.25.0"
   }
 }
