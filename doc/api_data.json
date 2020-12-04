@@ -39,7 +39,7 @@
         "name": "none"
       }
     ],
-    "description": "<p>Este metodo sirve para agregar imagenes a un capitulo, si se detecta que el programa al que pertenece el capitulo no tiene imagenes (default) la iamgen subida es posicionada como tal y los posteriores capitulos tendran como imagen default la proporcinada en esta API</p>",
+    "description": "<p>Este metodo sirve para agregar imagenes a un capitulo, si se detecta que el programa al que pertenece el capitulo no tiene imagenes (default) la iamgen subida es posicionada como tal y los posteriores capitulos tendran como imagen default la proporcinada en esta API, solo se ponene las  images que se requieren subir/cambair, si no se necesita alguna mandar null</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -63,7 +63,7 @@
     "examples": [
       {
         "title": "Ejemplo de uso:",
-        "content": "{\n\t\"email\":\"correo@gmail.com\",\n    \"password\":\"7c222fb2927d828af22f592134e8932480637c0d\"\n }",
+        "content": "{\n\t\n    \"usuario_id\":1,\n    \"chapter_id\":9,\n    \"thumbnail_list_horizontal\":null,\n    \"thumbnail_list_vertical\":\"http://www.claronetworks.openofficedospuntocero.info/images/concert-channel/section-home-vertical/Queen.jpg\",\n    \"image_synopsis\":null,\n    \"image_background_1\":null,\n    \"image_background_2\":null,\n    \"image_background_3\":null,\n    \"image_synopsis_frame_1\":null,\n    \"image_synopsis_frame_2\":null,\n    \"image_synopsis_frame_3\":null\n }",
         "type": "json"
       }
     ],
@@ -74,50 +74,57 @@
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
-            "field": "id",
+            "field": "usuario_id",
             "description": "<p>Id del administrador</p>"
           },
           {
             "group": "Success 200",
-            "type": "String",
+            "type": "Integer",
             "optional": false,
-            "field": "name",
-            "description": "<p>Nombre del administrador.</p>"
+            "field": "chapter_id",
+            "description": "<p>Id del capitulo</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "mail",
-            "description": "<p>Correo del administrador.</p>"
+            "field": "thumbnail_list_horizontal",
+            "description": "<p>Imagen horizontal que aparece en los carruseles (imagen principal)</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "gender",
-            "description": "<p>Genero del administrador</p>"
+            "field": "thumbnail_list_vertical",
+            "description": "<p>Imagen horizontal que aparece en los carruseles del Home</p>"
           },
           {
             "group": "Success 200",
-            "type": "Date",
+            "type": "String",
             "optional": false,
-            "field": "birthday",
-            "description": "<p>Fecha de nacimiento.</p>"
+            "field": "image_synopsis",
+            "description": "<p>Imagen horizontal que aparece en el landing de sinopsis del capitulo(imagen principal sinopsis)</p>"
           },
           {
             "group": "Success 200",
-            "type": "Array",
+            "type": "String",
             "optional": false,
-            "field": "rol",
-            "description": "<p>Arreglo con la informacion del rol.</p>"
+            "field": "image_background_x",
+            "description": "<p>Imagen horizontal que aparece en el carrusel principal del landing de sinopsis</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "image_synopsis_frame_x",
+            "description": "<p>Imagen horizontal de muestra para el landing de sinopsis, aprece al final</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response :",
-          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success User Found \",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Nombre\",\n        \"email\": \"correo@gmail.com\",\n        \"gender\": \"Male\",\n        \"birthday\": \"01-01-1970\",\n        \"rol\": {\n            \"id\": 1,\n            \"name\": \"root\"\n        }\n    }\n}",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Se agregaron/actualizaron la imagenes solicitadas\",\n    \"data\": {\n        \"chapter\": 9,\n        \"accion\": \"SI se pudieron insertar imagenes default, si ya exisitan no se modificaron si no existian estan actualizadas\"\n    }\n}",
           "type": "json"
         }
       ]

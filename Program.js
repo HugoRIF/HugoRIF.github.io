@@ -894,37 +894,42 @@
  * @apiGroup Programa
  * @apiPermission none
  *
- * @apiDescription Este metodo sirve para agregar imagenes a un capitulo, si se detecta que el programa al que pertenece el capitulo no tiene imagenes (default) la iamgen subida es posicionada como tal y los posteriores capitulos tendran como imagen default la proporcinada en esta API
+ * @apiDescription Este metodo sirve para agregar imagenes a un capitulo, si se detecta que el programa al que pertenece el capitulo no tiene imagenes (default) la iamgen subida es posicionada como tal y los posteriores capitulos tendran como imagen default la proporcinada en esta API, solo se ponene las  images que se requieren subir/cambair, si no se necesita alguna mandar null
  *
  * @apiParam {String} mail     Email del administrador
  * @apiParam {String} password Contraseña cifrada en sha1
  *
  * @apiExample Ejemplo de uso:
  * {
-	"email":"correo@gmail.com",
-    "password":"7c222fb2927d828af22f592134e8932480637c0d"
+	
+    "usuario_id":1,
+    "chapter_id":9,
+    "thumbnail_list_horizontal":null,
+    "thumbnail_list_vertical":"http://www.claronetworks.openofficedospuntocero.info/images/concert-channel/section-home-vertical/Queen.jpg",
+    "image_synopsis":null,
+    "image_background_1":null,
+    "image_background_2":null,
+    "image_background_3":null,
+    "image_synopsis_frame_1":null,
+    "image_synopsis_frame_2":null,
+    "image_synopsis_frame_3":null
+
  *  }
- * @apiSuccess {Integer}   id            Id del administrador
- * @apiSuccess {String}    name          Nombre del administrador.
- * @apiSuccess {String}    mail          Correo del administrador.
- * @apiSuccess {String}    gender       Genero del administrador
- * @apiSuccess {Date}      birthday      Fecha de nacimiento.
- * @apiSuccess {Array}   rol           Arreglo con la informacion del rol.
+ * @apiSuccess {Integer}   usuario_id            Id del administrador
+ * @apiSuccess {Integer}   chapter_id            Id del capitulo
+ * @apiSuccess {String}    thumbnail_list_horizontal         Imagen horizontal que aparece en los carruseles (imagen principal)
+ * @apiSuccess {String}    thumbnail_list_vertical         Imagen horizontal que aparece en los carruseles del Home 
+ * @apiSuccess {String}    image_synopsis           Imagen horizontal que aparece en el landing de sinopsis del capitulo(imagen principal sinopsis)
+ * @apiSuccess {String}    image_background_x       Imagen horizontal que aparece en el carrusel principal del landing de sinopsis
+ * @apiSuccess {String}    image_synopsis_frame_x         Imagen horizontal de muestra para el landing de sinopsis, aprece al final
  *
  * @apiSuccessExample {json} Success-Response :
  * {
     "code": 200,
-    "meessage": "Success User Found ",
+    "meessage": "Se agregaron/actualizaron la imagenes solicitadas",
     "data": {
-        "id": 1,
-        "name": "Nombre",
-        "email": "correo@gmail.com",
-        "gender": "Male",
-        "birthday": "01-01-1970",
-        "rol": {
-            "id": 1,
-            "name": "root"
-        }
+        "chapter": 9,
+        "accion": "SI se pudieron insertar imagenes default, si ya exisitan no se modificaron si no existian estan actualizadas"
     }
  * }
  * @apiError NotFound   No se encontro al administrador.
