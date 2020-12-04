@@ -45,17 +45,52 @@ define({ "api": [
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Integer",
             "optional": false,
-            "field": "mail",
-            "description": "<p>Email del administrador</p>"
+            "field": "usuario_id",
+            "description": "<p>Id del administrador</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "chapter_id",
+            "description": "<p>Id del capitulo</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "password",
-            "description": "<p>Contraseña cifrada en sha1</p>"
+            "field": "thumbnail_list_horizontal",
+            "description": "<p>Imagen horizontal que aparece en los carruseles (imagen principal)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "thumbnail_list_vertical",
+            "description": "<p>Imagen horizontal que aparece en los carruseles del Home</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "image_synopsis",
+            "description": "<p>Imagen horizontal que aparece en el landing de sinopsis del capitulo(imagen principal sinopsis)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "image_background_x",
+            "description": "<p>Imagen horizontal que aparece en el carrusel principal del landing de sinopsis</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "image_synopsis_frame_x",
+            "description": "<p>Imagen horizontal de muestra para el landing de sinopsis, aprece al final</p>"
           }
         ]
       }
@@ -68,59 +103,6 @@ define({ "api": [
       }
     ],
     "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Integer",
-            "optional": false,
-            "field": "usuario_id",
-            "description": "<p>Id del administrador</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Integer",
-            "optional": false,
-            "field": "chapter_id",
-            "description": "<p>Id del capitulo</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "thumbnail_list_horizontal",
-            "description": "<p>Imagen horizontal que aparece en los carruseles (imagen principal)</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "thumbnail_list_vertical",
-            "description": "<p>Imagen horizontal que aparece en los carruseles del Home</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "image_synopsis",
-            "description": "<p>Imagen horizontal que aparece en el landing de sinopsis del capitulo(imagen principal sinopsis)</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "image_background_x",
-            "description": "<p>Imagen horizontal que aparece en el carrusel principal del landing de sinopsis</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "image_synopsis_frame_x",
-            "description": "<p>Imagen horizontal de muestra para el landing de sinopsis, aprece al final</p>"
-          }
-        ]
-      },
       "examples": [
         {
           "title": "Success-Response :",

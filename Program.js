@@ -896,8 +896,13 @@
  *
  * @apiDescription Este metodo sirve para agregar imagenes a un capitulo, si se detecta que el programa al que pertenece el capitulo no tiene imagenes (default) la iamgen subida es posicionada como tal y los posteriores capitulos tendran como imagen default la proporcinada en esta API, solo se ponene las  images que se requieren subir/cambair, si no se necesita alguna mandar null
  *
- * @apiParam {String} mail     Email del administrador
- * @apiParam {String} password Contraseña cifrada en sha1
+ * @apiparam {Integer}   usuario_id            Id del administrador
+ * @apiparam {Integer}   chapter_id            Id del capitulo
+ * @apiparam {String}    thumbnail_list_horizontal         Imagen horizontal que aparece en los carruseles (imagen principal)
+ * @apiparam {String}    thumbnail_list_vertical         Imagen horizontal que aparece en los carruseles del Home 
+ * @apiparam {String}    image_synopsis           Imagen horizontal que aparece en el landing de sinopsis del capitulo(imagen principal sinopsis)
+ * @apiparam {String}    image_background_x       Imagen horizontal que aparece en el carrusel principal del landing de sinopsis
+ * @apiparam {String}    image_synopsis_frame_x         Imagen horizontal de muestra para el landing de sinopsis, aprece al final
  *
  * @apiExample Ejemplo de uso:
  * {
@@ -915,14 +920,7 @@
     "image_synopsis_frame_3":null
 
  *  }
- * @apiSuccess {Integer}   usuario_id            Id del administrador
- * @apiSuccess {Integer}   chapter_id            Id del capitulo
- * @apiSuccess {String}    thumbnail_list_horizontal         Imagen horizontal que aparece en los carruseles (imagen principal)
- * @apiSuccess {String}    thumbnail_list_vertical         Imagen horizontal que aparece en los carruseles del Home 
- * @apiSuccess {String}    image_synopsis           Imagen horizontal que aparece en el landing de sinopsis del capitulo(imagen principal sinopsis)
- * @apiSuccess {String}    image_background_x       Imagen horizontal que aparece en el carrusel principal del landing de sinopsis
- * @apiSuccess {String}    image_synopsis_frame_x         Imagen horizontal de muestra para el landing de sinopsis, aprece al final
- *
+
  * @apiSuccessExample {json} Success-Response :
  * {
     "code": 200,
