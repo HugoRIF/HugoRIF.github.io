@@ -648,7 +648,7 @@
  * 
  */
 /**
- * @api {get} /program/getProgramingGrill/{inicio}&{fin}&{landing}&{id}} Obtener toda la programacion para la grilla 
+ * @api {get} /program/getProgramingGrill/{inicio}&{fin}&{landing}&{id}} Filtrar toda la programacion para la grilla 
  * @apiVersion 1.0.0
  * @apiName Filtrar Programacion para la grilla
  * @apiGroup Programa

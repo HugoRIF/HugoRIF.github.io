@@ -895,7 +895,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/program/getProgramingGrill/{inicio}&{fin}&{landing}&{id}}",
-    "title": "Obtener toda la programacion para la grilla",
+    "title": "Filtrar toda la programacion para la grilla",
     "version": "1.0.0",
     "name": "Filtrar_Programacion_para_la_grilla",
     "group": "Programa",
