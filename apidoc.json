@@ -8,5 +8,8 @@
     "template": {
         "withCompare": true,
         "withGenerator": true
-    }
+    },
+    "order":[
+        "Usuario Administrador"
+    ]
   }

@@ -8,12 +8,15 @@
     "withCompare": true,
     "withGenerator": true
   },
+  "order": [
+    "Usuario Administrador"
+  ],
   "sampleUrl": false,
   "defaultVersion": "0.0.0",
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2020-12-02T21:29:46.028Z",
+    "time": "2020-12-04T21:29:50.433Z",
     "url": "https://apidocjs.com",
     "version": "0.25.0"
   }
