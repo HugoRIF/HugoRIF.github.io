@@ -2344,7 +2344,7 @@
         "name": "admin"
       }
     ],
-    "description": "<p>Método para subir las iamgenes al carrusel principal del landing de programación, solo los adminsitradores puede usar este metodo, se pueden eviar varias imagenes a a vez,las iamgenes se posicionaran en el orden indicado. EL método tiene dos funciones, actualizar la iamgen de una posicion especifica o agregar una nueva, se debe saber cual es la ultima psosicion, si se encuentra que la posición indicada no existe se crea la posicion y se agrega la imagen</p>",
+    "description": "<p>Método para cabiar los iconos de los canales en el landing de programación, si no se queire cambiar algun icono se debe poner el parametro del canal en null</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -2359,15 +2359,36 @@
             "group": "Parameter",
             "type": "Array",
             "optional": false,
-            "field": "value",
-            "description": "<p>URLs de las imagenes que se agregaran</p>"
+            "field": "canal_claro",
+            "description": "<p>URLs del icono para canal claro</p>"
           },
           {
             "group": "Parameter",
             "type": "Array",
             "optional": false,
-            "field": "postions",
-            "description": "<p>posiciones en que las imagenes se agregarán</p>"
+            "field": "concert_channel",
+            "description": "<p>URLs del icono para concert channel</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "claro_cinema",
+            "description": "<p>URLs del icono para claro cinema</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "icon",
+            "description": "<p>url para el icono</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "url",
+            "description": "<p>url para redirecionar</p>"
           }
         ]
       }
@@ -2375,7 +2396,7 @@
     "examples": [
       {
         "title": "Ejemplo de uso:",
-        "content": "{\n\t\"usuario_id\":1,\n    \"value\":[\"http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\",\"http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"],\n    \"positions\":[1,11]\n }",
+        "content": "{\n\t\"usuario_id\":1,\n    \"canal_claro\":[\n                    \"icon\":\"icono-canal_claro\",\n                    \"url\":\"icono-canal_claro\"\n                ],\n    \"concet_channel\":null,\n    \"claro_cinema\":null,\n }",
         "type": "json"
       }
     ],
@@ -2401,7 +2422,7 @@
       "examples": [
         {
           "title": "Success-Response :",
-          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Operación en el Slider exitosa\",\n    \"data\": [\n        {\n            \"posicion\": 1,\n            \"operación\": \"actualizada http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"\n        },\n        {\n            \"posicion\": 11,\n            \"operación\": \"creada http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"\n        }\n    ]\n}",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Se actualizo correctamente:\",\n    \"data\": [\n        \n        \"canal_claro\": icono y url actulizados\n    \n        \n    ]\n}",
           "type": "json"
         }
       ]
@@ -2420,12 +2441,6 @@
             "optional": false,
             "field": "BadRequest",
             "description": "<p>Error en validación del usuario.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "BadRequest-Server",
-            "description": "<p>Error en tamaños de arreglos.</p>"
           }
         ]
       },
@@ -2439,11 +2454,6 @@
           "title": "Response (BadRequest):",
           "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
           "type": "json"
-        },
-        {
-          "title": "Response (BadRequest-Server):",
-          "content": "{\n \"code\":500,\n \"message\":\"The legth of value and positions are not the same\"\n \"data\" : {\n    \n }\n}",
-          "type": "json"
         }
       ]
     },
@@ -2452,33 +2462,26 @@
   },
   {
     "type": "post",
-    "url": "/admin_user/login",
-    "title": "Inicio de sesion de administrador",
+    "url": "/programation/getChapter/{id}'",
+    "title": "Obtner informacion Programa (Termometro)",
     "version": "1.0.0",
-    "name": "Iniciar_Sesion",
-    "group": "Seccion",
+    "name": "Termometro",
+    "group": "Programacion",
     "permission": [
       {
         "name": "none"
       }
     ],
-    "description": "<p>Método POST para inciar sesión</p>",
+    "description": "<p>Este metodo trae la información de un capitulo especifico, incluye el termometro para saber el estatus de los horarios en el dia del programa</p>",
     "parameter": {
       "fields": {
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Integer",
             "optional": false,
-            "field": "mail",
-            "description": "<p>Email del administrador</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "password",
-            "description": "<p>Contraseña cifrada en sha1</p>"
+            "field": "id",
+            "description": "<p>Id del capitulo</p>"
           }
         ]
       }
@@ -2486,7 +2489,7 @@
     "examples": [
       {
         "title": "Ejemplo de uso:",
-        "content": "{\n\t\"email\":\"correo@gmail.com\",\n    \"password\":\"7c222fb2927d828af22f592134e8932480637c0d\"\n }",
+        "content": "http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public/programation/getChapter/997",
         "type": "json"
       }
     ],
@@ -2497,50 +2500,343 @@
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
-            "field": "id",
-            "description": "<p>Id del administrador</p>"
+            "field": "id_status",
+            "description": "<p>estatus del capitulo</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "name",
-            "description": "<p>Nombre del administrador.</p>"
+            "field": "status",
+            "description": "<p>Descripcion del estatus en el que se encuentra el programa</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Inetger",
+            "optional": false,
+            "field": "id_alert",
+            "description": "<p>tipo de alerta que manda el capitulo</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "mail",
-            "description": "<p>Correo del administrador.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "gender",
-            "description": "<p>Genero del administrador</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Date",
-            "optional": false,
-            "field": "birthday",
-            "description": "<p>Fecha de nacimiento.</p>"
+            "field": "alert",
+            "description": "<p>Descripcion de la alerta</p>"
           },
           {
             "group": "Success 200",
             "type": "Array",
             "optional": false,
-            "field": "rol",
-            "description": "<p>Arreglo con la informacion del rol.</p>"
+            "field": "program",
+            "description": "<p>Atributos del capitulo y del programa al que pertenece</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "program_catalogue",
+            "description": "<p>Catalogo de los programas diponibles</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "thermometer",
+            "description": "<p>Informacion relevante para el termometro</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "thermometer.duracion",
+            "description": "<p>Duración en float del capitulo actual</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "thermometer.thermometer",
+            "description": "<p>listado por periodos para realizar el pintado del termometro, se muestran tres posibles estados, ocupado/actual/disponible.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "image_program",
+            "description": "<p>url de la imagen del programa</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "genres",
+            "description": "<p>catalogo de los generos disponibles</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response :",
-          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success User Found \",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Nombre\",\n        \"email\": \"correo@gmail.com\",\n        \"gender\": \"Male\",\n        \"birthday\": \"01-01-1970\",\n        \"rol\": {\n            \"id\": 1,\n            \"name\": \"root\"\n        }\n    }\n}",
+          "content": "{\n\t \"code\": 200,\n    \"meessage\": \"Información del capitulo encontrada\",\n    \"data\": {\n        \"id_status\": 1,\n        \"status\": \"En edicion\",\n        \"id_alert\": 1,\n        \"alert\": \"Información completa\",\n        \"program\": {\n            \"id\": 997,\n            \"title\": \"Mansionair: Live in Concert\",\n            \"day\": \"2020-11-17\",\n            \"programing\": 1,\n            \"season\": 0,\n            \"episode_number\": 0,\n            \"in_home\": 0,\n            \"in_home_begin\": null,\n            \"in_home_expiration\": \"1970-01-01 00:00:00\",\n            \"in_landing\": 0,\n            \"in_landing_begin\": null,\n            \"in_landing_expiration\": \"1970-01-01 00:00:00\",\n            \"thumbnail_list_horizontal\": null,\n            \"thumbnail_list_vertical\": null,\n            \"image_synopsis\": null,\n            \"image_synopsis_frame_1\": null,\n            \"image_synopsis_frame_2\": null,\n            \"image_synopsis_frame_3\": null,\n            \"synopsis\": \"Mansionair te seducirá con sus relajadas vibraciones de synth-pop australiano.\",\n            \"landing_synopsis\": 0,\n            \"short_synopsis\": \"sinopsis corta de Mansionair: Live in Concert\",\n            \"program_episode_number\": 0,\n            \"duration\": \"00:30:00\",\n            \"image_background_1\": null,\n            \"image_background_2\": null,\n            \"image_background_3\": null,\n            \"subbed\": \"0\",\n            \"dubbed\": \"0\",\n            \"audio5\": \"0\",\n            \"section_id\": 2,\n            \"version_id\": 3,\n            \"program_id\": 120,\n            \"copy_of\": null,\n            \"created_at\": \"2020-11-09 10:20:02\",\n            \"updated_at\": \"2020-11-09 10:20:02\",\n            \"subtitle\": \"Mansionair: Live in Concert\",\n            \"chapter_id\": 997,\n            \"hour\": \"1:00:00\",\n            \"program\": {\n                \"id\": 120,\n                \"title\": \"Mansionair: Live in Concert\",\n                \"synopsis\": \"Mansionair te seducirá con sus relajadas vibraciones de synth-pop australiano.\",\n                \"genre\": \"Concierto\",\n                \"rating\": \"PG-13\",\n                \"image_background_3\": null,\n                \"image_background_2\": null,\n                \"image_background_1\": null,\n                \"duration\": \"-990 minutos\",\n                \"seasons\": 0,\n                \"year\": 2018,\n                \"periodicity\": 0,\n                \"image_synopsis_frame_1\": null,\n                \"image_synopsis_frame_2\": null,\n                \"image_synopsis_frame_3\": null,\n                \"image_synopsis\": null,\n                \"thumbnail_list_horizontal\": null,\n                \"thumbnail_list_vertical\": null,\n                \"section_id\": 2,\n                \"copy_of\": null,\n                \"provider_identifer\": null,\n                \"created_at\": null,\n                \"updated_at\": \"2020-11-09 10:20:02\"\n            }\n        },\n        \"program_catalogue\": [...],\n         \"thermometer\": {\n               \"duracion\": \"0.5\",\n        \"thermometer\": {\n            \"0:00\": {\n                \"color\": \"#FF8200\",\n                \"status\": \"Ocupado\",\n                \"chapter_id\": 996,\n                \"duration\": \"1.0\",\n                \"viene_de\": \"dura mas de un periodo,2\"\n            },\n            \"0:30\": {\n                \"color\": \"#FF8200\",\n                \"status\": \"Ocupado\",\n                \"chapter_id\": 996,\n                \"duration\": \"1.0\",\n                \"viene_de\": \"dura mas de un periodo,2\"\n            },\n            \"1:00\": {\n                \"color\": \"#0097A9\",\n                \"status\": \"Programación Actual\",\n                \"chapter_id\": 997,\n                \"duration\": \"0.5\",\n                \"viene_de\": \"solo dura un periodo, es el actual\"\n            },\n            \"1:30\": {\n                \"color\": \"#FF8200\",\n                \"status\": \"Ocupado\",\n                \"chapter_id\": 998,\n                \"duration\": \"0.5\",\n                \"viene_de\": \"solo dura un periodo, no es el actual\"\n            },\n            \"2:00\": {\n                \"color\": \"#FF8200\",\n                \"status\": \"Ocupado\",\n                \"chapter_id\": 999,\n                \"duration\": \"1.0\",\n                \"viene_de\": \"dura mas de un periodo,2\"\n            },...\n        },\n        \"image_program\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/14_JohnMayer.jpg\",\n        \"genres\": [...]\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación de capitulo</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"No hay ningun capitulo con ese id\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Programacion.js",
+    "groupTitle": "Programacion"
+  },
+  {
+    "type": "post",
+    "url": "/programation/getChapterByDate/{day}&{hour}&{channel}",
+    "title": "Obtner informacion Programa (Termometro) Por fecha",
+    "version": "1.0.0",
+    "name": "Termometro",
+    "group": "Programacion",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Este metodo trae la información de un capitulo especifico, funciona al darle click en el calendario interno del modal donde apaerece el termometro, incluye el termometro para saber el estatus de los horarios en el dia del programa</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "day",
+            "description": "<p>Dia del capitulo</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "hour",
+            "description": "<p>Hora del capitulo</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "channel",
+            "description": "<p>Canal al que pertenece</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public/programation/ByDate/2020-11-17&10:00:00&Canal Claro",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id_status",
+            "description": "<p>estatus del capitulo</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Descripcion del estatus en el que se encuentra el programa</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Inetger",
+            "optional": false,
+            "field": "id_alert",
+            "description": "<p>tipo de alerta que manda el capitulo</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "alert",
+            "description": "<p>Descripcion de la alerta</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "program",
+            "description": "<p>Atributos del capitulo y del programa al que pertenece</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "program_catalogue",
+            "description": "<p>Catalogo de los programas diponibles</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "thermometer",
+            "description": "<p>Informacion relevante para el termometro</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "thermometer.duracion",
+            "description": "<p>Duración en float del capitulo actual</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "thermometer.thermometer",
+            "description": "<p>listado por periodos para realizar el pintado del termometro, se muestran tres posibles estados, ocupado/actual/disponible.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "image_program",
+            "description": "<p>url de la imagen del programa</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "genres",
+            "description": "<p>catalogo de los generos disponibles</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n\t \"code\": 200,\n    \"meessage\": \"Información del capitulo encontrada\",\n    \"data\": {\n        \"id_status\": 1,\n        \"status\": \"En edicion\",\n        \"id_alert\": 1,\n        \"alert\": \"Información completa\",\n        \"program\": {\n            \"id\": 997,\n            \"title\": \"Mansionair: Live in Concert\",\n            \"day\": \"2020-11-17\",\n            \"programing\": 1,\n            \"season\": 0,\n            \"episode_number\": 0,\n            \"in_home\": 0,\n            \"in_home_begin\": null,\n            \"in_home_expiration\": \"1970-01-01 00:00:00\",\n            \"in_landing\": 0,\n            \"in_landing_begin\": null,\n            \"in_landing_expiration\": \"1970-01-01 00:00:00\",\n            \"thumbnail_list_horizontal\": null,\n            \"thumbnail_list_vertical\": null,\n            \"image_synopsis\": null,\n            \"image_synopsis_frame_1\": null,\n            \"image_synopsis_frame_2\": null,\n            \"image_synopsis_frame_3\": null,\n            \"synopsis\": \"Mansionair te seducirá con sus relajadas vibraciones de synth-pop australiano.\",\n            \"landing_synopsis\": 0,\n            \"short_synopsis\": \"sinopsis corta de Mansionair: Live in Concert\",\n            \"program_episode_number\": 0,\n            \"duration\": \"00:30:00\",\n            \"image_background_1\": null,\n            \"image_background_2\": null,\n            \"image_background_3\": null,\n            \"subbed\": \"0\",\n            \"dubbed\": \"0\",\n            \"audio5\": \"0\",\n            \"section_id\": 2,\n            \"version_id\": 3,\n            \"program_id\": 120,\n            \"copy_of\": null,\n            \"created_at\": \"2020-11-09 10:20:02\",\n            \"updated_at\": \"2020-11-09 10:20:02\",\n            \"subtitle\": \"Mansionair: Live in Concert\",\n            \"chapter_id\": 997,\n            \"hour\": \"1:00:00\",\n            \"program\": {\n                \"id\": 120,\n                \"title\": \"Mansionair: Live in Concert\",\n                \"synopsis\": \"Mansionair te seducirá con sus relajadas vibraciones de synth-pop australiano.\",\n                \"genre\": \"Concierto\",\n                \"rating\": \"PG-13\",\n                \"image_background_3\": null,\n                \"image_background_2\": null,\n                \"image_background_1\": null,\n                \"duration\": \"-990 minutos\",\n                \"seasons\": 0,\n                \"year\": 2018,\n                \"periodicity\": 0,\n                \"image_synopsis_frame_1\": null,\n                \"image_synopsis_frame_2\": null,\n                \"image_synopsis_frame_3\": null,\n                \"image_synopsis\": null,\n                \"thumbnail_list_horizontal\": null,\n                \"thumbnail_list_vertical\": null,\n                \"section_id\": 2,\n                \"copy_of\": null,\n                \"provider_identifer\": null,\n                \"created_at\": null,\n                \"updated_at\": \"2020-11-09 10:20:02\"\n            }\n        },\n        \"program_catalogue\": [...],\n         \"thermometer\": {\n               \"duracion\": \"0.5\",\n        \"thermometer\": {\n            \"0:00\": {\n                \"color\": \"#FF8200\",\n                \"status\": \"Ocupado\",\n                \"chapter_id\": 996,\n                \"duration\": \"1.0\",\n                \"viene_de\": \"dura mas de un periodo,2\"\n            },\n            \"0:30\": {\n                \"color\": \"#FF8200\",\n                \"status\": \"Ocupado\",\n                \"chapter_id\": 996,\n                \"duration\": \"1.0\",\n                \"viene_de\": \"dura mas de un periodo,2\"\n            },\n            \"1:00\": {\n                \"color\": \"#0097A9\",\n                \"status\": \"Programación Actual\",\n                \"chapter_id\": 997,\n                \"duration\": \"0.5\",\n                \"viene_de\": \"solo dura un periodo, es el actual\"\n            },\n            \"1:30\": {\n                \"color\": \"#FF8200\",\n                \"status\": \"Ocupado\",\n                \"chapter_id\": 998,\n                \"duration\": \"0.5\",\n                \"viene_de\": \"solo dura un periodo, no es el actual\"\n            },\n            \"2:00\": {\n                \"color\": \"#FF8200\",\n                \"status\": \"Ocupado\",\n                \"chapter_id\": 999,\n                \"duration\": \"1.0\",\n                \"viene_de\": \"dura mas de un periodo,2\"\n            },...\n        },\n        \"image_program\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/14_JohnMayer.jpg\",\n        \"genres\": [...]\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación de capitulo</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"No hay ningun capitulo con ese id\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Programacion.js",
+    "groupTitle": "Programacion"
+  },
+  {
+    "type": "post",
+    "url": "/section/editBlockProgramingLanding",
+    "title": "Editar Bloque programación",
+    "version": "1.0.0",
+    "name": "Editar_Bloque_de_programación",
+    "group": "Seccion",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "description": "<p>Metodo para editar el bloque en donde se ve la programacion de cada landing, si no se necesita editar alguno poner o null u omitirlo,</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>id del administrador que hace la peticion</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "landing",
+            "description": "<p>landing del bloque a editar</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "icon_chanel",
+            "description": "<p>url del icono del landing</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title_1",
+            "description": "<p>Pimera parte del titulo</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title_2",
+            "description": "<p>Segunda parte del titulo</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "url_programation",
+            "description": "<p>url a la redirecionara el boton de ver programcion</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n    \"usuario_id\":\"1\",\n    \"landing\":\"Canal Claro\",\n    \"icon_chanel\":null,\n    \"title_1\":\"HOY EN\",\n    \"title_2\":\"CANAL CLARO\",\n    \"url_programation\":\"programacion.php\"\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n}",
           "type": "json"
         }
       ]
@@ -2567,10 +2863,166 @@
           "title": "Response (NotFound):",
           "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
           "type": "json"
-        },
+        }
+      ]
+    },
+    "filename": "./Section.js",
+    "groupTitle": "Seccion"
+  },
+  {
+    "type": "post",
+    "url": "/section/editElement",
+    "title": "Editar Elemento del landing",
+    "version": "1.0.0",
+    "name": "Editar_Elemento_del_landing",
+    "group": "Seccion",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "description": "<p>Metodo para editar editar algun elemto en especifico del landing</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>id del administrador que quiere editar</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "value",
+            "description": "<p>valor que se quiere guardar</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "key",
+            "description": "<p>palabra clave del elemento que se quiere editar</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "landing",
+            "description": "<p>id del landing que se quiere editar</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n    'usuario_id' => 'required',\n    'value' => 'required',\n    'key' => 'required',\n    'landing' => 'required'\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
         {
-          "title": "Response (BadRequest):",
-          "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "title": "Success-Response :",
+          "content": "{\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación del usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Section.js",
+    "groupTitle": "Seccion"
+  },
+  {
+    "type": "get",
+    "url": "/section/{landing}",
+    "title": "Obtener contenido",
+    "version": "1.0.0",
+    "name": "Obtener_contenido",
+    "group": "Seccion",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Método GET para obener el contenido del landing especifico, se obitienen todos los attributos relacionados a este landing para pintarlos en el front, cabe señalar que los carruseles especiales de cada landign vienen definidos de dos fromas la primera es con el nombre de carrusel_1_X el cual es un arreglo que contiene los ids de los capitulo pertenecientes, posteriormente se encuentran parametros como carrusel_X_imageX los cuales son la informacion detallada necesaria para pintar el recuadro de cada carrusel</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "landing",
+            "description": "<p>landing que se quiere obtner</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public/section/programation",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Content of Home\",\n    \"data\": {\n        \"block_1_title\": \"DESCUBRE CLARO\",\n        \"block_1_subtitle\": \"networkS\",\n        \"block_1_image_background_1\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/banner/claro-home-background.jpg\",\n        \"block_1_image_background_2\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/banner/concert-home-background.jpg\",\n        \"block_1_image_background_3\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/banner/cinema-home-background.jpg\",\n        \"block_1_image_background_4\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/banner/nv-home-bg.jpg\",\n        \"block_1_image_background_5\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/banner/cs-home-bg.jpg\",\n        \"block_1_video_name\": \"http://www.claronetworks.openofficedospuntocero.info/video/video.mp4\",\n        \"block_2_title1\": \"AHORA\",\n        \"block_2_title2\": \"AL AIRE\",\n        \"block_2_channel1_icon\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-1.svg\",\n        \"block_2_channel1_icon_hover\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-1.svg\",\n        \"block_2_channel2_icon\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-2.svg\",\n        \"block_2_channel2_icon_hover\": \"http://www.claronetworks.openofficedospuntocero.info/v1.2/images/home/concert-home-img.svg\",\n        \"block_2_channel3_icon\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-3.svg\",\n        \"block_2_channel3_icon_hover\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-3.svg\",\n        \"block_2_channel4_icon\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-4.svg\",\n        \"block_2_channel4_icon_hover\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-4.svg\",\n        \"block_2_channel5_icon\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-5.svg\",\n        \"block_2_channel5_icon_hover\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-5.svg\",\n        \"block_3_title\": \"CANAL CLARO\",\n        \"block_3_subtitle\": \"LO MEJOR DEL ENTRETENIMIENTO\",\n        \"block_3_button1\": \"VER+\",\n        \"block_3_button1_color\": \"#FF0007\",\n        \"block_3_button1_color_hover\": \"#FF0007\",\n        \"block_3_button1_url\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-1.svg\",\n        \"block_3_carrusel\": \"[\\\"407\\\",\\\"218\\\",\\\"217\\\",9,29,1,24]\",\n        \"block_3_icon_channel\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-1.svg\",\n        \"block_3_icon_channel_hover\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-1.svg\",\n        \"block_3_icon_channel_url\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/tv-1.svg\",\n        \"block_3_legend\": \"HORARIOS SUJETOS A CAMBIOS\",\n        \"block_4_title\": \"CONCERT CHANNEL\",\n        \"block_4_subtitle\": \"TUS BANDAS FAVORITAS EN PRIMERA FILA\",\n        \"block_4_button1\": \"VER+\",\n        \"block_4_button1_color\": \"#FF00D2\",\n        \"block_4_button1_color_hover\": \"#FF00D2\",\n        \"block_4_button1_url\": \"http://www.claronetworks.openofficedospuntocero.info/concert-channel.php\",\n        \"block_4_carrusel\": \"[84,85,86,87]\",\n        \"block_4_icon_channel\": \"http://www.claronetworks.openofficedospuntocero.info/v1.2/images/home/concert-home-img.svg\",\n        \"block_4_icon_channel_hover\": \"http://www.claronetworks.openofficedospuntocero.info/v1.2/images/home/concert-home-img.svg\",\n        \"block_4_icon_channel_url\": \"http://www.claronetworks.openofficedospuntocero.info/concert-channel.php\",\n        \"block_4_legend\": \"HORARIOS SUJETOS A CAMBIOS\",\n        \"block_5_bg_image\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/claro-cinema-background.png\",\n        \"block_5_title\": \"CLARO CINEMA\",\n        \"block_5_subtitle\": \"LOS ÍDOLOS QUE MÉXICO LE DIO AL CINE\",\n        \"block_5_button1\": \"VER+\",\n        \"block_5_button1_color\": \"#FF0007\",\n        \"block_5_button1_color_hover\": \"#FF0007\",\n        \"block_5_button1_url\": \"http://www.claronetworks.openofficedospuntocero.info/v1.2/claro-cinema.php\",\n        \"block_5_carrusel\": \"[\\\"1385\\\",47,48,49,50]\",\n        \"block_5_icon_channel\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/cinema-home-img.svg\",\n        \"block_5_icon_channel_hover\": \"http://www.claronetworks.openofficedospuntocero.info/images/home/cinema-home-img.svg\",\n        \"block_5_icon_channel_url\": \"http://www.claronetworks.openofficedospuntocero.info/concert-channel.php\",\n        \"block_5_legend\": \"HORARIOS SUJETOS A CAMBIOS\",\n        \"block_3_image1\": {\n            \"program_id\": 66,\n            \"chapter_id\": 407,\n            \"title\": \"Marvel Anime: Wolverine\",\n            \"subtitle\": \"Marvel Anime: Wolverine EP 02\",\n            \"genre\": \"Animación, Series\",\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/images/default/claro-horizontal-slider.jpg\",\n            \"image_vertical\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/storage/canal-claro/section-home-vertical/407.jpeg\"\n        },\n        \"block_3_image2\": {\n            \"program_id\": 70,\n            \"chapter_id\": 218,\n            \"title\": \"Secret Life of Growing Up\",\n            \"subtitle\": \"Secret Life of Growing Up ep 01\",\n            \"genre\": \"Documental\",\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/images/default/claro-horizontal-slider.jpg\",\n            \"image_vertical\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/storage/canal-claro/section-home-vertical/218.jpeg\"\n        },\n        \"block_3_image3\": {\n            \"program_id\": 69,\n            \"chapter_id\": 217,\n            \"title\": \"Marvel Anime: X-MEN\",\n            \"subtitle\": \"Marvel Anime X-MEN EP03\",\n            \"genre\": \"Animación, Series\",\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/images/default/claro-horizontal-slider.jpg\",\n            \"image_vertical\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/storage/canal-claro/section-home-vertical/217.jpeg\"\n        },\n        \"block_3_image4\": {\n            \"program_id\": 8,\n            \"chapter_id\": 9,\n            \"title\": \"La Caja de Pandora\",\n            \"subtitle\": \"Temporada 5 -  Ana Torroja\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/06_LaCajaDePandora.jpg\",\n            \"image_vertical\": \"http://www.claronetworks.openofficedospuntocero.info/images/concert-channel/section-home-vertical/Queen.jpg\"\n        },\n        \"block_3_image5\": {\n            \"program_id\": 19,\n            \"chapter_id\": 29,\n            \"title\": \"Los Indestructibles 2\",\n            \"subtitle\": \"Los Indestructibles 2\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/indestructibles.jpg\",\n            \"image_vertical\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/storage/carrusel-home/vertical/SecretLifeofGrowingUp.jpeg\"\n        },\n        \"block_3_image6\": {\n            \"program_id\": 2,\n            \"chapter_id\": 1,\n            \"title\": \"Los Caballeros del Zodiaco (Saint Seiya)\",\n            \"subtitle\": \"Shiryū contra Máscara de la Muerte\",\n            \"genre\": \"Accion, Anime\",\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/01_Caballeros.jpg\",\n            \"image_vertical\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/images/default/claro-vertical.jpg\"\n        },\n        \"block_3_image7\": {\n            \"program_id\": 17,\n            \"chapter_id\": 24,\n            \"title\": \"Una Mujer Desconocida\",\n            \"subtitle\": \"Una Mujer Desconocida\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-horizontal/15_UnaMujerDesconocida.jpg\",\n            \"image_vertical\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-canal/section-home-vertical/CC-MUJER-DESCONOCIDA.jpg\"\n        },\n        \"block_4_image1\": {\n            \"program_id\": 47,\n            \"chapter_id\": 84,\n            \"title\": \"Concierto\",\n            \"subtitle\": \"Billie Eillish\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/concert-channel/section-home-horizontal/billie-eillish.jpg\",\n            \"image_vertical\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/storage/concert-channel/section-home-vertical/84.jpeg\"\n        },\n        \"block_4_image2\": {\n            \"program_id\": 47,\n            \"chapter_id\": 85,\n            \"title\": \"Concierto\",\n            \"subtitle\": \"Chica\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/concert-channel/section-home-horizontal/chica-concert.jpg\",\n            \"image_vertical\": \"http://www.claronetworks.openofficedospuntocero.info/images/concert-channel/section-home-vertical/Mary-J-Blige.jpg\"\n        },\n        \"block_4_image3\": {\n            \"program_id\": 47,\n            \"chapter_id\": 86,\n            \"title\": \"Concierto\",\n            \"subtitle\": \"Ed Sheeran\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/concert-channel/section-home-horizontal/billie-eillish.jpg\",\n            \"image_vertical\": \"http://www.claronetworks.openofficedospuntocero.info/images/concert-channel/section-home-vertical/Ed-Sheeran.jpg\"\n        },\n        \"block_4_image4\": {\n            \"program_id\": 47,\n            \"chapter_id\": 87,\n            \"title\": \"Concierto\",\n            \"subtitle\": \"Queen\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/concert-channel/section-home-horizontal/billie-eillish.jpg\",\n            \"image_vertical\": \"http://www.claronetworks.openofficedospuntocero.info/images/concert-channel/section-home-vertical/Queen.jpg\"\n        },\n        \"block_5_image1\": {\n            \"program_id\": 172,\n            \"chapter_id\": 1385,\n            \"title\": \"EN LA BOCA DEL LOBO\",\n            \"subtitle\": \"LA BOCA DEL LOBO\",\n            \"genre\": \"Accion, Drama\",\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/images/default/cinema-horizontal-slider.jpg\",\n            \"image_vertical\": \"http://back.claronetworks.openofficedospuntocero.info/backoffice/public/storage/claro-cinema/vertical/ENLABOCADELLOBO1385_vertical.jpeg\"\n        },\n        \"block_5_image2\": {\n            \"program_id\": 30,\n            \"chapter_id\": 47,\n            \"title\": \"Cine de Oro\",\n            \"subtitle\": \"CASA DE LOS ESPANTOS\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-cinema/section-home-horizontal/CINEMA-CASA-DELOS-ESPANTOS.jpg\",\n            \"image_vertical\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-cinema/section-home-vertical/CINEMA-CASA-DELOS-ESPANTOS.jpg\"\n        },\n        \"block_5_image3\": {\n            \"program_id\": 30,\n            \"chapter_id\": 48,\n            \"title\": \"Cine de Oro\",\n            \"subtitle\": \"EL VIZCONDE\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-cinema/section-home-horizontal/CINEMA-EL-VIZCONDE.jpg\",\n            \"image_vertical\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-cinema/section-home-vertical/CINEMA-EL-VIZCONDE.jpg\"\n        },\n        \"block_5_image4\": {\n            \"program_id\": 30,\n            \"chapter_id\": 49,\n            \"title\": \"Cine de Oro\",\n            \"subtitle\": \"LOS VALIENTES\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-cinema/section-home-horizontal/CINEMA-LOS-VALIENTES.jpg\",\n            \"image_vertical\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-cinema/section-home-vertical/CINEMA-LOS-VALIENTES.jpg\"\n        },\n        \"block_5_image5\": {\n            \"program_id\": 30,\n            \"chapter_id\": 50,\n            \"title\": \"Cine de Oro\",\n            \"subtitle\": \"TU HIJO DEBE NACER\",\n            \"genre\": null,\n            \"landing_synopsis\": 0,\n            \"image_horizontal\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-cinema/section-home-horizontal/CINEMA-LOS-VALIENTES.jpg\",\n            \"image_vertical\": \"http://www.claronetworks.openofficedospuntocero.info/images/claro-cinema/section-home-vertical/CINEMA-TU-HIJO-DEBE-NACER.jpg\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación del usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
           "type": "json"
         }
       ]

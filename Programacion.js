@@ -134,8 +134,8 @@
  * @apiDescription Este metodo trae la información de un capitulo especifico, incluye el termometro para saber el estatus de los horarios en el dia del programa
  *
  * @apiParam {Integer} id     Id del capitulo
- *http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public/programation/getChapter/997
  * @apiExample Ejemplo de uso:
+ *http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public/programation/getChapter/997
  * 
  * @apiSuccess {Integer}   id_status      estatus del capitulo
  * @apiSuccess {String}    status      Descripcion del estatus en el que se encuentra el programa
@@ -289,8 +289,8 @@
  * @apiParam {String} day     Dia del capitulo
  * @apiParam {String} hour     Hora del capitulo 
  * @apiParam {String} channel    Canal al que pertenece 
- *http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public/programation/getChapter/997
  * @apiExample Ejemplo de uso:
+ *http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public/programation/ByDate/2020-11-17&10:00:00&Canal Claro
  * 
  * @apiSuccess {Integer}   id_status      estatus del capitulo
  * @apiSuccess {String}    status      Descripcion del estatus en el que se encuentra el programa
