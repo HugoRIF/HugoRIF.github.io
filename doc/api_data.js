@@ -2216,33 +2216,40 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/admin_user/login",
-    "title": "Inicio de sesion de administrador",
+    "url": "/programation/setImageSlider",
+    "title": "Agregar Imagenes al Carrusel principal",
     "version": "1.0.0",
-    "name": "Iniciar_Sesion",
+    "name": "Agregar_Imagenes",
     "group": "Programacion",
     "permission": [
       {
-        "name": "none"
+        "name": "admin"
       }
     ],
-    "description": "<p>Método POST para inciar sesión</p>",
+    "description": "<p>Método para subir las iamgenes al carrusel principal del landing de programación, solo los adminsitradores puede usar este metodo, se pueden eviar varias imagenes a a vez,las iamgenes se posicionaran en el orden indicado. EL método tiene dos funciones, actualizar la iamgen de una posicion especifica o agregar una nueva, se debe saber cual es la ultima psosicion, si se encuentra que la posición indicada no existe se crea la posicion y se agrega la imagen</p>",
     "parameter": {
       "fields": {
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Integer",
             "optional": false,
-            "field": "mail",
-            "description": "<p>Email del administrador</p>"
+            "field": "usuario_id",
+            "description": "<p>Id del administrador que hace la solicitud</p>"
           },
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Array",
             "optional": false,
-            "field": "password",
-            "description": "<p>Contraseña cifrada en sha1</p>"
+            "field": "value",
+            "description": "<p>URLs de las imagenes que se agregaran</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "postions",
+            "description": "<p>posiciones en que las imagenes se agregarán</p>"
           }
         ]
       }
@@ -2250,7 +2257,7 @@ define({ "api": [
     "examples": [
       {
         "title": "Ejemplo de uso:",
-        "content": "{\n\t\"email\":\"correo@gmail.com\",\n    \"password\":\"7c222fb2927d828af22f592134e8932480637c0d\"\n }",
+        "content": "{\n\t\"usuario_id\":1,\n    \"value\":[\"http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\",\"http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"],\n    \"positions\":[1,11]\n }",
         "type": "json"
       }
     ],
@@ -2261,50 +2268,22 @@ define({ "api": [
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
-            "field": "id",
-            "description": "<p>Id del administrador</p>"
+            "field": "posicion",
+            "description": "<p>la posicion en la que se agrega la iamgen</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "name",
-            "description": "<p>Nombre del administrador.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "mail",
-            "description": "<p>Correo del administrador.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "gender",
-            "description": "<p>Genero del administrador</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Date",
-            "optional": false,
-            "field": "birthday",
-            "description": "<p>Fecha de nacimiento.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Array",
-            "optional": false,
-            "field": "rol",
-            "description": "<p>Arreglo con la informacion del rol.</p>"
+            "field": "operacion",
+            "description": "<p>Descripcion de la operacion creada/actualizada</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response :",
-          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success User Found \",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Nombre\",\n        \"email\": \"correo@gmail.com\",\n        \"gender\": \"Male\",\n        \"birthday\": \"01-01-1970\",\n        \"rol\": {\n            \"id\": 1,\n            \"name\": \"root\"\n        }\n    }\n}",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Operación en el Slider exitosa\",\n    \"data\": [\n        {\n            \"posicion\": 1,\n            \"operación\": \"actualizada http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"\n        },\n        {\n            \"posicion\": 11,\n            \"operación\": \"creada http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"\n        }\n    ]\n}",
           "type": "json"
         }
       ]
@@ -2323,6 +2302,12 @@ define({ "api": [
             "optional": false,
             "field": "BadRequest",
             "description": "<p>Error en validación del usuario.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest-Server",
+            "description": "<p>Error en tamaños de arreglos.</p>"
           }
         ]
       },
@@ -2335,6 +2320,129 @@ define({ "api": [
         {
           "title": "Response (BadRequest):",
           "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest-Server):",
+          "content": "{\n \"code\":500,\n \"message\":\"The legth of value and positions are not the same\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Programacion.js",
+    "groupTitle": "Programacion"
+  },
+  {
+    "type": "post",
+    "url": "/programation/setIconChannel",
+    "title": "Cambiar Iconos de Canales",
+    "version": "1.0.0",
+    "name": "Cambiar_Iconos",
+    "group": "Programacion",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "description": "<p>Método para subir las iamgenes al carrusel principal del landing de programación, solo los adminsitradores puede usar este metodo, se pueden eviar varias imagenes a a vez,las iamgenes se posicionaran en el orden indicado. EL método tiene dos funciones, actualizar la iamgen de una posicion especifica o agregar una nueva, se debe saber cual es la ultima psosicion, si se encuentra que la posición indicada no existe se crea la posicion y se agrega la imagen</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>Id del administrador que hace la solicitud</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "value",
+            "description": "<p>URLs de las imagenes que se agregaran</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "postions",
+            "description": "<p>posiciones en que las imagenes se agregarán</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n\t\"usuario_id\":1,\n    \"value\":[\"http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\",\"http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"],\n    \"positions\":[1,11]\n }",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "posicion",
+            "description": "<p>la posicion en la que se agrega la iamgen</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "operacion",
+            "description": "<p>Descripcion de la operacion creada/actualizada</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Operación en el Slider exitosa\",\n    \"data\": [\n        {\n            \"posicion\": 1,\n            \"operación\": \"actualizada http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"\n        },\n        {\n            \"posicion\": 11,\n            \"operación\": \"creada http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"\n        }\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación del usuario.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest-Server",
+            "description": "<p>Error en tamaños de arreglos.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest-Server):",
+          "content": "{\n \"code\":500,\n \"message\":\"The legth of value and positions are not the same\"\n \"data\" : {\n    \n }\n}",
           "type": "json"
         }
       ]
