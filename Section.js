@@ -306,23 +306,199 @@
  *
  * @apiExample Ejemplo de uso:
  * {
-    'usuario_id' => 'required',
-    'value' => 'required',
-    'key' => 'required',
-    'landing' => 'required'
+    "usuario_id": 1,
+    "value" : "value",
+    "key" => "key",
+    "landing" => "Canal Claro"
  * }
  * 
  * @apiSuccessExample {json} Success-Response :
  * {
-   
+   "code": 200,
+    "meessage": "Se modifico el $key del $landing",
+    "data": {
+        "key":"landing"
+    }
  * }
- * @apiError NotFound   No se encontro al administrador.
- * @apiError BadRequest  Error en validación del usuario.
+ * @apiError NotFound-User   No se encontro al administrador.
+ * @apiError NotFound-landing   No se encontro el landing.
  *
- * @apiErrorExample Response (NotFound):
+ * @apiErrorExample Response (NotFound-User):
  * {
  *  "code":404,
- *  "message":"Error User not found with the given information. "
+ *  "message":"No tienes permiso para hacer esto"
+ *  "data" : {
+ *     
+ *  }
+ * }
+ * @apiErrorExample Response (NotFound-landing):
+ * {
+ *  "code":404,
+ *  "message":"El landing no se encontro"
+ *  "data" : {
+ *     
+ *  }
+ * }
+ */
+/**
+ * @api {post} /section/setImageSlider Agregar Imagenes al Carrusel
+ * @apiVersion 1.0.0
+ * @apiName Agregar al carrusel
+ * @apiGroup Seccion
+ * @apiPermission admin
+ *
+ * @apiDescription Metodo para agregar imagenes al carrusel principal del landing indicado,las iamgenes se suben por un medio diferente, esta api solo recibe la url de la image que se agregara y la posicion en la que se agregara.
+ *
+ * @apiParam {String} usuario_id    id del administrador que quiere editar
+ * @apiParam {Array} value    Arreglo con las urls de las imagenes
+ * @apiParam {String} positions  Posiciones en la que estarán las imagenes
+ * @apiParam {String} landing  Nombre del landing que se quiere editar
+ * @apiParam {String} schedule_date  Hora en la que se empezara a mostrar (No desarrollado por complete, se muestran de inmediato)
+ * @apiParam {String} expiration_date  Ultimo dia en el que aparecerán (No desarrollado por complete, se muestran de inmediato)
+ * 
+ * @apiExample Ejemplo de uso:
+ * {
+     "usuario_id":1,
+    "value":["http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg"],
+    "positions":[11],
+    "landing":"Canal Claro",
+    "schedule_date":"00:00:00",
+    "expiration_date":"00:00:00"
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response :
+ * {
+   "code": 200,
+    "meessage": "Operación en el Slider exitosa",
+    "data": [
+       
+        {
+            "posicion": 11,
+            "operación": "creada http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg"
+        }
+    ]
+ * }
+ * @apiError NotFound-User   No se encontro al administrador.
+ * @apiError NotFound-landing   No se encontro el landing.
+ *
+ * @apiErrorExample Response (NotFound-User):
+ * {
+ *  "code":404,
+ *  "message":"No tienes permiso para hacer esto"
+ *  "data" : {
+ *     
+ *  }
+ * }
+ * @apiErrorExample Response (NotFound-landing):
+ * {
+ *  "code":404,
+ *  "message":"El landing no se encontro"
+ *  "data" : {
+ *     
+ *  }
+ * }
+ */
+/**
+ * @api {post} /section/editBlock1Home Editar el Bloque 1 de programación
+ * @apiVersion 1.0.0
+ * @apiName Editar Bloque 1 progrmación
+ * @apiGroup Seccion
+ * @apiPermission admin
+ *
+ * @apiDescription Metodo para agregar imagenes al carrusel principal del landing indicado,las iamgenes se suben por un medio diferente, esta api solo recibe la url de la image que se agregara y la posicion en la que se agregara.
+ *
+ * @apiParam {String} usuario_id    id del administrador que quiere editar
+ * @apiParam {String} title    Titulo principal del home (Color azul)
+ * @apiParam {String} subtitle    Titulo secundario del home (Color negro)
+ * @apiParam {String} video   URL del video promocional del home
+ * @apiParam {Array} images   Imagenes para el carrusel del home en la version movil
+ * @apiParam {Array} positions   Posiciones para las imagenes del carrusel en la version movil
+ * @apiParam {String} inicio   Fecha de inicio en el que se mostrarán los cambios (No desarrollado aun, los cambios se mantienen hasta que se vuelca a editar)
+ * @apiParam {String} fin   Fecha de fin en el que se muestrán los cambios (No desarrollado aun, los cambios se mantienen hasta que se vuelca a editar)
+ * 
+ * @apiExample Ejemplo de uso:
+ * {
+        "usuario_id"  : 1,
+        "title": "Descubre Claro",
+        "subtitle": "Networks",
+        "video": URL,
+        "images": [],
+        "positions": [],
+        "inicio": "00:00:00",
+        "fin": "00:00:00"
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response :
+ * {
+   "code": 200,
+    "meessage": "Se edito el block 1 del home ",
+    "data": [
+       
+        {
+            "block_1_title": "Se actualizo el title del home se puso  Descubre Claro",
+            "block_1_subtitle": "Se actualizo el subtitle del home se puso  Networks",
+        }
+    ]
+ * }
+ * @apiError NotFound-User   No se encontro al administrador.
+ *
+ * @apiErrorExample Response (NotFound-User):
+ * {
+ *  "code":404,
+ *  "message":"No tienes permiso para hacer esto"
+ *  "data" : {
+ *     
+ *  }
+ * }
+ */
+/**
+ * @api {post} /section/editBlockChannelHome Editar el Bloque 1 de programación
+ * @apiVersion 1.0.0
+ * @apiName Editar Bloque 1 progrmación
+ * @apiGroup Seccion
+ * @apiPermission admin
+ *
+ * @apiDescription Metodo para agregar imagenes al carrusel principal del landing indicado,las iamgenes se suben por un medio diferente, esta api solo recibe la url de la image que se agregara y la posicion en la que se agregara.
+ *
+ * @apiParam {String} usuario_id    id del administrador que quiere editar
+ * @apiParam {String} title    Titulo principal del home (Color azul)
+ * @apiParam {String} subtitle    Titulo secundario del home (Color negro)
+ * @apiParam {String} video   URL del video promocional del home
+ * @apiParam {Array} images   Imagenes para el carrusel del home en la version movil
+ * @apiParam {Array} positions   Posiciones para las imagenes del carrusel en la version movil
+ * @apiParam {String} inicio   Fecha de inicio en el que se mostrarán los cambios (No desarrollado aun, los cambios se mantienen hasta que se vuelca a editar)
+ * @apiParam {String} fin   Fecha de fin en el que se muestrán los cambios (No desarrollado aun, los cambios se mantienen hasta que se vuelca a editar)
+ * 
+ * @apiExample Ejemplo de uso:
+ * {
+        "usuario_id"  : 1,
+        "title": "Descubre Claro",
+        "subtitle": "Networks",
+        "video": URL,
+        "images": [],
+        "positions": [],
+        "inicio": "00:00:00",
+        "fin": "00:00:00"
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response :
+ * {
+   "code": 200,
+    "meessage": "Se edito el block 1 del home ",
+    "data": [
+       
+        {
+            "block_1_title": "Se actualizo el title del home se puso  Descubre Claro",
+            "block_1_subtitle": "Se actualizo el subtitle del home se puso  Networks",
+        }
+    ]
+ * }
+ * @apiError NotFound-User   No se encontro al administrador.
+ *
+ * @apiErrorExample Response (NotFound-User):
+ * {
+ *  "code":404,
+ *  "message":"No tienes permiso para hacer esto"
  *  "data" : {
  *     
  *  }

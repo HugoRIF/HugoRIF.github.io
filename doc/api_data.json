@@ -2766,6 +2766,342 @@
   },
   {
     "type": "post",
+    "url": "/section/setImageSlider",
+    "title": "Agregar Imagenes al Carrusel",
+    "version": "1.0.0",
+    "name": "Agregar_al_carrusel",
+    "group": "Seccion",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "description": "<p>Metodo para agregar imagenes al carrusel principal del landing indicado,las iamgenes se suben por un medio diferente, esta api solo recibe la url de la image que se agregara y la posicion en la que se agregara.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>id del administrador que quiere editar</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "value",
+            "description": "<p>Arreglo con las urls de las imagenes</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "positions",
+            "description": "<p>Posiciones en la que estarán las imagenes</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "landing",
+            "description": "<p>Nombre del landing que se quiere editar</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "schedule_date",
+            "description": "<p>Hora en la que se empezara a mostrar (No desarrollado por complete, se muestran de inmediato)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "expiration_date",
+            "description": "<p>Ultimo dia en el que aparecerán (No desarrollado por complete, se muestran de inmediato)</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n     \"usuario_id\":1,\n    \"value\":[\"http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"],\n    \"positions\":[11],\n    \"landing\":\"Canal Claro\",\n    \"schedule_date\":\"00:00:00\",\n    \"expiration_date\":\"00:00:00\"\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n   \"code\": 200,\n    \"meessage\": \"Operación en el Slider exitosa\",\n    \"data\": [\n       \n        {\n            \"posicion\": 11,\n            \"operación\": \"creada http://www.claronetworks.openofficedospuntocero.info/images/programacion/banner/canal-claro/pc/CANAL-CLARO-05-A.jpg\"\n        }\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound-User",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound-landing",
+            "description": "<p>No se encontro el landing.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound-User):",
+          "content": "{\n \"code\":404,\n \"message\":\"No tienes permiso para hacer esto\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (NotFound-landing):",
+          "content": "{\n \"code\":404,\n \"message\":\"El landing no se encontro\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Section.js",
+    "groupTitle": "Seccion"
+  },
+  {
+    "type": "post",
+    "url": "/section/editBlock1Home",
+    "title": "Editar el Bloque 1 de programación",
+    "version": "1.0.0",
+    "name": "Editar_Bloque_1_progrmación",
+    "group": "Seccion",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "description": "<p>Metodo para agregar imagenes al carrusel principal del landing indicado,las iamgenes se suben por un medio diferente, esta api solo recibe la url de la image que se agregara y la posicion en la que se agregara.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>id del administrador que quiere editar</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Titulo principal del home (Color azul)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "subtitle",
+            "description": "<p>Titulo secundario del home (Color negro)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "video",
+            "description": "<p>URL del video promocional del home</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "images",
+            "description": "<p>Imagenes para el carrusel del home en la version movil</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "positions",
+            "description": "<p>Posiciones para las imagenes del carrusel en la version movil</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "inicio",
+            "description": "<p>Fecha de inicio en el que se mostrarán los cambios (No desarrollado aun, los cambios se mantienen hasta que se vuelca a editar)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "fin",
+            "description": "<p>Fecha de fin en el que se muestrán los cambios (No desarrollado aun, los cambios se mantienen hasta que se vuelca a editar)</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n        \"usuario_id\"  : 1,\n        \"title\": \"Descubre Claro\",\n        \"subtitle\": \"Networks\",\n        \"video\": URL,\n        \"images\": [],\n        \"positions\": [],\n        \"inicio\": \"00:00:00\",\n        \"fin\": \"00:00:00\"\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n   \"code\": 200,\n    \"meessage\": \"Se edito el block 1 del home \",\n    \"data\": [\n       \n        {\n            \"block_1_title\": \"Se actualizo el title del home se puso  Descubre Claro\",\n            \"block_1_subtitle\": \"Se actualizo el subtitle del home se puso  Networks\",\n        }\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound-User",
+            "description": "<p>No se encontro al administrador.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound-User):",
+          "content": "{\n \"code\":404,\n \"message\":\"No tienes permiso para hacer esto\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Section.js",
+    "groupTitle": "Seccion"
+  },
+  {
+    "type": "post",
+    "url": "/section/editBlockChannelHome",
+    "title": "Editar el Bloque 1 de programación",
+    "version": "1.0.0",
+    "name": "Editar_Bloque_1_progrmación",
+    "group": "Seccion",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "description": "<p>Metodo para agregar imagenes al carrusel principal del landing indicado,las iamgenes se suben por un medio diferente, esta api solo recibe la url de la image que se agregara y la posicion en la que se agregara.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>id del administrador que quiere editar</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Titulo principal del home (Color azul)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "subtitle",
+            "description": "<p>Titulo secundario del home (Color negro)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "video",
+            "description": "<p>URL del video promocional del home</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "images",
+            "description": "<p>Imagenes para el carrusel del home en la version movil</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "positions",
+            "description": "<p>Posiciones para las imagenes del carrusel en la version movil</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "inicio",
+            "description": "<p>Fecha de inicio en el que se mostrarán los cambios (No desarrollado aun, los cambios se mantienen hasta que se vuelca a editar)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "fin",
+            "description": "<p>Fecha de fin en el que se muestrán los cambios (No desarrollado aun, los cambios se mantienen hasta que se vuelca a editar)</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n        \"usuario_id\"  : 1,\n        \"title\": \"Descubre Claro\",\n        \"subtitle\": \"Networks\",\n        \"video\": URL,\n        \"images\": [],\n        \"positions\": [],\n        \"inicio\": \"00:00:00\",\n        \"fin\": \"00:00:00\"\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n   \"code\": 200,\n    \"meessage\": \"Se edito el block 1 del home \",\n    \"data\": [\n       \n        {\n            \"block_1_title\": \"Se actualizo el title del home se puso  Descubre Claro\",\n            \"block_1_subtitle\": \"Se actualizo el subtitle del home se puso  Networks\",\n        }\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound-User",
+            "description": "<p>No se encontro al administrador.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound-User):",
+          "content": "{\n \"code\":404,\n \"message\":\"No tienes permiso para hacer esto\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Section.js",
+    "groupTitle": "Seccion"
+  },
+  {
+    "type": "post",
     "url": "/section/editBlockProgramingLanding",
     "title": "Editar Bloque programación",
     "version": "1.0.0",
@@ -2919,7 +3255,7 @@
     "examples": [
       {
         "title": "Ejemplo de uso:",
-        "content": "{\n    'usuario_id' => 'required',\n    'value' => 'required',\n    'key' => 'required',\n    'landing' => 'required'\n}",
+        "content": "{\n    \"usuario_id\": 1,\n    \"value\" : \"value\",\n    \"key\" => \"key\",\n    \"landing\" => \"Canal Claro\"\n}",
         "type": "json"
       }
     ],
@@ -2927,7 +3263,7 @@
       "examples": [
         {
           "title": "Success-Response :",
-          "content": "{\n}",
+          "content": "{\n   \"code\": 200,\n    \"meessage\": \"Se modifico el $key del $landing\",\n    \"data\": {\n        \"key\":\"landing\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -2938,21 +3274,26 @@
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "NotFound",
+            "field": "NotFound-User",
             "description": "<p>No se encontro al administrador.</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "BadRequest",
-            "description": "<p>Error en validación del usuario.</p>"
+            "field": "NotFound-landing",
+            "description": "<p>No se encontro el landing.</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Response (NotFound):",
-          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "title": "Response (NotFound-User):",
+          "content": "{\n \"code\":404,\n \"message\":\"No tienes permiso para hacer esto\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (NotFound-landing):",
+          "content": "{\n \"code\":404,\n \"message\":\"El landing no se encontro\"\n \"data\" : {\n    \n }\n}",
           "type": "json"
         }
       ]
