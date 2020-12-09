@@ -2877,9 +2877,9 @@
   {
     "type": "post",
     "url": "/section/editBlock1Home",
-    "title": "Editar el Bloque 1 de programación",
+    "title": "Editar el Bloque 1 HOME",
     "version": "1.0.0",
-    "name": "Editar_Bloque_1_progrmación",
+    "name": "Editar_Bloque_1_del_home",
     "group": "Seccion",
     "permission": [
       {
@@ -2990,7 +2990,7 @@
   {
     "type": "post",
     "url": "/section/editBlockChannelHome",
-    "title": "Editar el Bloque 1 de programación",
+    "title": "Editar el Bloque de canal HOME",
     "version": "1.0.0",
     "name": "Editar_Bloque_1_progrmación",
     "group": "Seccion",
@@ -6386,33 +6386,33 @@
   },
   {
     "type": "post",
-    "url": "/admin_user/login",
-    "title": "Inicio de sesion de administrador",
+    "url": "/version/aprobarVersion",
+    "title": "Aprobar versión",
     "version": "1.0.0",
-    "name": "Iniciar_Sesion",
+    "name": "Aprobar_versión",
     "group": "Versiones",
     "permission": [
       {
-        "name": "none"
+        "name": "admin-approver"
       }
     ],
-    "description": "<p>Método POST para inciar sesión</p>",
+    "description": "<p>Este metódo aprueba la versión indicada e integra los cambios a la versión maestra para que el publico vea los cambios.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Integer",
             "optional": false,
-            "field": "mail",
-            "description": "<p>Email del administrador</p>"
+            "field": "usuario_id",
+            "description": "<p>Id del adminsitrador que aprobará la version</p>"
           },
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Integer",
             "optional": false,
-            "field": "password",
-            "description": "<p>Contraseña cifrada en sha1</p>"
+            "field": "version_id",
+            "description": "<p>id de la version a aprobar</p>"
           }
         ]
       }
@@ -6420,61 +6420,15 @@
     "examples": [
       {
         "title": "Ejemplo de uso:",
-        "content": "{\n\t\"email\":\"correo@gmail.com\",\n    \"password\":\"7c222fb2927d828af22f592134e8932480637c0d\"\n }",
+        "content": "{\n\t\"usuario_id\":1,\n\t\"version_id\":50\n }",
         "type": "json"
       }
     ],
     "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Integer",
-            "optional": false,
-            "field": "id",
-            "description": "<p>Id del administrador</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "name",
-            "description": "<p>Nombre del administrador.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "mail",
-            "description": "<p>Correo del administrador.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "gender",
-            "description": "<p>Genero del administrador</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Date",
-            "optional": false,
-            "field": "birthday",
-            "description": "<p>Fecha de nacimiento.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Array",
-            "optional": false,
-            "field": "rol",
-            "description": "<p>Arreglo con la informacion del rol.</p>"
-          }
-        ]
-      },
       "examples": [
         {
           "title": "Success-Response :",
-          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success User Found \",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Nombre\",\n        \"email\": \"correo@gmail.com\",\n        \"gender\": \"Male\",\n        \"birthday\": \"01-01-1970\",\n        \"rol\": {\n            \"id\": 1,\n            \"name\": \"root\"\n        }\n    }\n}",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success Version approved and changes now in master version \",\n    \"data\": {\n           \"Se aprobó una version de Canal Claro Programacion\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -6493,6 +6447,409 @@
             "optional": false,
             "field": "BadRequest",
             "description": "<p>Error en validación del usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Versions.js",
+    "groupTitle": "Versiones"
+  },
+  {
+    "type": "post",
+    "url": "/version/sendRevisionLanding",
+    "title": "Enviar a Revision Landing",
+    "version": "1.0.0",
+    "name": "Enviar_a_Landing",
+    "group": "Versiones",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "description": "<p>Se envia a revisión la version abierta del landing indicado.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>Id del adminsitrador que envia sus versiones a revision</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "landing_id",
+            "description": "<p>id del landing</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n\t\"usuario_id\":7,\n\t\"landing_id\":1\n }",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success Version in revision \",\n    \"data\": {\n           \"Se mando a revision una version de Home landing\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación del usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Versions.js",
+    "groupTitle": "Versiones"
+  },
+  {
+    "type": "post",
+    "url": "/version/sendRevisionAll",
+    "title": "Enviar a Revision Todas",
+    "version": "1.0.0",
+    "name": "Enviar_a_Revision",
+    "group": "Versiones",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "description": "<p>Se envian a revisión todas las versiones abiertas que el usuario que realiza la petición tenga.Los estados de todas las versiones cambian a 'En revision', los cambios que se realizen posteriormente de usar esta API se guardaran en una nueva version</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>Id del adminsitrador que envia sus versiones a revision</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n\t\"usuario_id\":7\n }",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success Version in revision \",\n    \"data\": {\n       [\n           \"Se mando a revision una version de Canal Claro landing\",\n           \"Se mando a revision una version de Canal Claro programacion\",\n           \"Se mando a revision una version de Home landing\"\n       ]\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación del usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Versions.js",
+    "groupTitle": "Versiones"
+  },
+  {
+    "type": "get",
+    "url": "/version/history/{id}",
+    "title": "Obtener Historial de versiones",
+    "version": "1.0.0",
+    "name": "Historial",
+    "group": "Versiones",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>Id del adminsitrador que aprobará la version</p>"
+          }
+        ]
+      }
+    },
+    "description": "<p>Muestra todas las versiones con sus estatus y comentarios de lo que se hizo en dicha version.Si el id del administrador pertenece a un super usuario o a un aprobador se mostrará el historial de todos los usuarios, pero si es un usuario editor o con permisos inferiores se mostrarán solo sus versiones</p>",
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "http://www.claronetworks.openofficedospuntocero.info/Claro_Networks_API/public/version/history/1",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success Version History founded\",\n    \"data\": {\n           [\n               {\n                   \"id\":23,\n                   \"section_id\":7,\n                   \"section\":\"Canal Claro\",\n                   \"programing\":1,\n                   \"status_id\":1,\n                   \"status_id\":\"abierta\",\n                   \"commits\":[\n                       \"Se agrego un capitulo\",\n                       \"Se elimino un capitulo\",\n                       \"Se agregaron imagenes al capitulo\",\n                       \"agrego la progrmacion del 00-00-00\"\n                   ],\n\n               }\n           ]\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación del usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Versions.js",
+    "groupTitle": "Versiones"
+  },
+  {
+    "type": "post",
+    "url": "/version/declineVersion",
+    "title": "Rechazar Version",
+    "version": "1.0.0",
+    "name": "Rechazar",
+    "group": "Versiones",
+    "permission": [
+      {
+        "name": "admin-approver"
+      }
+    ],
+    "description": "<p>Despues de que un editor mande a revisión, algún aprobador debe realizar la revision para integrar los cambios, en el caso en que dichos cambios tengan alguna situación el aprobador rechaza la versión para que el editor corrija o realice los cambios necesarios.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>Id del adminsitrador que aprobará la version</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "version_id",
+            "description": "<p>Id de la versión que se rechaza</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Text",
+            "optional": false,
+            "field": "comments",
+            "description": "<p>Comentarios o motivos del rechazo</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n \"usuario_id\":1,\n \"version_id\":30,\n \"comments\":\"Las imagenes no corresponden a un capitulo y hhay un emplame en en Concert channel el dia 17-Dic a las 20:30\",\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success Version Declined\",\n    \"data\": {\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación de parametros.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (NotFound):",
+          "content": "{\n \"code\":404,\n \"message\":\"Error User not found with the given information. \"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Response (BadRequest):",
+          "content": "{\n \"code\":422,\n \"message\":\"Some params can´t be found\"\n \"data\" : {\n    \n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./Versions.js",
+    "groupTitle": "Versiones"
+  },
+  {
+    "type": "post",
+    "url": "/version/deleteVersion",
+    "title": "Eliminar Version",
+    "version": "1.0.0",
+    "name": "Rechazar",
+    "group": "Versiones",
+    "permission": [
+      {
+        "name": "admin-approver"
+      }
+    ],
+    "description": "<p>Eliminar una version, solo se puede eliminar una version propia no de otros usuarios</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "usuario_id",
+            "description": "<p>Id del adminsitrador que aprobará la version</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "version_id",
+            "description": "<p>Id de la versión que se rechaza</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Ejemplo de uso:",
+        "content": "{\n \"usuario_id\":7,\n \"version_id\":30,\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response :",
+          "content": "{\n    \"code\": 200,\n    \"meessage\": \"Success Version Deleted\",\n    \"data\": {\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>No se encontro al administrador.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>Error en validación de parametros.</p>"
           }
         ]
       },

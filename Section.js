@@ -399,9 +399,9 @@
  * }
  */
 /**
- * @api {post} /section/editBlock1Home Editar el Bloque 1 de programación
+ * @api {post} /section/editBlock1Home Editar el Bloque 1 HOME
  * @apiVersion 1.0.0
- * @apiName Editar Bloque 1 progrmación
+ * @apiName Editar Bloque 1 del home
  * @apiGroup Seccion
  * @apiPermission admin
  *
@@ -452,7 +452,7 @@
  * }
  */
 /**
- * @api {post} /section/editBlockChannelHome Editar el Bloque 1 de programación
+ * @api {post} /section/editBlockChannelHome Editar el Bloque de canal HOME
  * @apiVersion 1.0.0
  * @apiName Editar Bloque 1 progrmación
  * @apiGroup Seccion
